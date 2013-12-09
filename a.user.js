@@ -8,6 +8,7 @@
 // @match			http://p.www.xiaomi.com/open/index.html
 // @match			http://www.xiaomi.com/index.php
 // @match			https://kyfw.12306.cn/otn/leftTicket/init
+// @match			http://kyfw.12306.cn/otn/leftTicket/init
 // @require			http://lib.sinaapp.com/js/jquery/1.8.3/jquery.min.js
 // @icon			http://p.www.xiaomi.com/zt/2013/icon-common.png?0822
 // @run-at			document-idle
