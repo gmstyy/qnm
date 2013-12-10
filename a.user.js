@@ -9,7 +9,9 @@
 // @match			http://www.xiaomi.com/index.php
 // @match			https://kyfw.12306.cn/otn/leftTicket/init
 // @match			http://kyfw.12306.cn/otn/leftTicket/init
-// @match			http://www.taobao.com/go/market/2013/1212/main.php
+// @match		http://www.taobao.com/go/market/2013/1212/main.php
+// @match		http://miao.item.taobao.com/36329491755.htm*
+// @match	 http://miao.item.taobao.com/36337224540.htm*
 // @require			
 // @icon			
 // @run-at			document-idle
@@ -100,11 +102,15 @@ function init(){
 }
 function matchPosition(obj,x,y){
 	var oRect   =   obj.getBoundingClientRect(); 
+	var doc =document.documentElement,body =document.body;
+	var oX=oRect.left+(doc &&doc.scrollLeft||body &&body.scrollLeft||0)-(doc &&doc.clientLeft||body &&body.clientLeft||0);
+	var oY=oRect.top+(doc &&doc.scrollTop||body &&body.scrollTop||0)-(doc &&doc.clientTop||body &&body.clientTop||0);
 	var mx=$(obj).css("marginLeft");
 	var my=$(obj).css("marginTop");
 	x-=mx==""?0:parseInt(mx.replace("px",""));
 	y-=my==""?0:parseInt(my.replace("px",""));
-	if(oRect.left<x&&oRect.right>x&&oRect.top<y&&oRect.bottom>y){
+	//debugger;
+	if(oX<x&&(oX+oRect.width)>x&&oY<y&&(oY+oRect.height)>y){
 		return true;
 	}
 	return false;
@@ -184,7 +190,8 @@ function autoclick(){
 					//var oRect   =   this.getBoundingClientRect(); 
 					//alert(oRect.left+" "+oRect.right);
 					//alert(this.class);
-					//alert(this.value);
+					//alert(this.href);
+					//272,1181
 					this.click();
 					return false;
 				}
