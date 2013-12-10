@@ -12,7 +12,7 @@
 // @run-at			document-idle
 // @version 		1.0 
 // @updateURL		http://gmstyy.github.io/qnm/xiaomi.user.js
-// @supportURL		http://gmstyy.github.io/qnm/
+// @supportURL		http://gmstyy.github.io/qnm/	 
 // @homepage		 
 // @contributionURL	 
 // @contributionAmount	￥5.00
@@ -30,7 +30,7 @@ var remButton="<input style='background:#FFC503;color:#C50000;height:30px;width:
 var piText="<input type='text' style='height:20px;width:60px;'/>";
 var frequentText="<input type='text'  style='height:20px;width:50px;text-align:right;'/>";
 var stopText="<input type='text'  style='height:20px;width:30px;text-align:right;'/>";
-var divTamplate="<div align='center'/>";
+var divTamplate="<tr align='center'/>";
 //手机 277,1211
 //盒子 762,1211
 //电源 999,1211
@@ -76,7 +76,7 @@ function init(){
 	var removeBtn=$(remButton);
 	var cti=$(frequentText);
 	var psi=$(stopText);
-	var div=$(divTamplate);
+	var row=$(divTamplate);
 	cti.val(config.seq[0].frequent);
 	pi.val(config.seq[0].clickX+","+config.seq[0].clickY);
 	pi.change(function(){
@@ -122,17 +122,17 @@ function init(){
 			//}
 		//}
 	});
-	var container=$("<div/>");
+	var container=$("<table/>");
 	addBtn.click(function(){
 		var newDiv=newRow(++config.maxIndex);
 		container.append(newDiv);
 	});
-	div.append(bc).append(ps);
-	div.append("坐标:").append(pi);
-	div.append("间隔:").append(cti).append("毫秒");
-	div.append(pb);
-	div.append("运行:").append(psi).append("分").append(addBtn);
-	container.append(div);
+	var td1=$("<td/>").append(bc).append(ps);
+	row.append(td1);
+	var td2=$("<td/>").append("坐标:").append(pi).append("间隔:").append(cti).append("毫秒");
+	td2.append(pb).append("运行:").append(psi).append("分").append(addBtn);
+	row.append(td2);
+	container.append(row);
 	var newDiv=newRow(++config.maxIndex);
 	container.append(newDiv);
 	body.prepend(container);
@@ -198,11 +198,9 @@ function newRow(no){
 		bc.css("background", "#FFC503");
 		bc.css("color", "#C50000");
 	});*/
-	div.append("坐标:").append(pi);
-	div.append("间隔:").append(cti).append("毫秒");
-	div.append(pb);
-	//div.append(bc);
-	div.append("运行:").append(psi).append("分").append(removeBtn);
+	var td2=$("<td/>").append("坐标:").append(pi).append("间隔:").append(cti).append("毫秒");
+	td2.append(pb).append("运行:").append(psi).append("分").append(removeBtn);
+	div.append("<td/>").append(td2);
 	return div;
 }
 function matchPosition(obj,x,y){
