@@ -9,6 +9,7 @@
 // @match			http://www.xiaomi.com/index.php
 // @match			https://kyfw.12306.cn/otn/leftTicket/init
 // @match			http://kyfw.12306.cn/otn/leftTicket/init
+// @match			http://www.taobao.com/go/market/2013/1212/main.php
 // @require			
 // @icon			
 // @run-at			document-idle
