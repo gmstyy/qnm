@@ -16,8 +16,8 @@
 // @icon			
 // @run-at			document-idle
 // @version 		1.0 
-// @updateURL		
-// @supportURL		 
+// @updateURL		http://gmstyy.github.io/qnm/xiaomi.user.js
+// @supportURL		http://gmstyy.github.io/qnm/index
 // @homepage		 
 // @contributionURL	 
 // @contributionAmount	￥5.00
