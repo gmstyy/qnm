@@ -10,7 +10,7 @@
 // @require			
 // @icon			
 // @run-at			document-idle
-// @version 		1.0 
+// @version 		1.1 
 // @updateURL		http://gmstyy.github.io/qnm/xiaomi.user.js
 // @supportURL		http://gmstyy.github.io/qnm/	 
 // @homepage		 
@@ -110,17 +110,7 @@ function init(){
 	config.acButton=bc;
 	bc.click(beginClick);
 	ps.click(function(){
-		config.stop=true;
-		//for(var key in cp){
-			//if(typeof(cp[key].acButton)!="undefined"){
-		config.acButton.val("开始点");
-		config.acButton.attr("disabled",false); 
-		config.acButton.css("background", "#FFC503");
-		config.acButton.css("color", "#C50000");
-		config.url=document.location;
-		config.index=0;
-			//}
-		//}
+		stop();
 	});
 	var container=$("<table/>");
 	addBtn.click(function(){
@@ -175,6 +165,7 @@ function newRow(no){
 		var body=$("body");
 		body.mousedown(function(e){
 			if(e.which==3){
+				debugger;
 				config.seq[no].clickX=e.pageX;
 				config.seq[no].clickY=e.pageY;
 				config.stop=false;
@@ -186,7 +177,7 @@ function newRow(no){
 		});
 	});
 	removeBtn.click(function(){
-		delete cp[no];
+		delete config.seq[no];
 		$(this.parentNode).remove();
 	});
 	//config.seq[no].acButton=bc;
@@ -208,10 +199,10 @@ function matchPosition(obj,x,y){
 	var doc =document.documentElement,body =document.body;
 	var oX=oRect.left+(doc &&doc.scrollLeft||body &&body.scrollLeft||0)-(doc &&doc.clientLeft||body &&body.clientLeft||0);
 	var oY=oRect.top+(doc &&doc.scrollTop||body &&body.scrollTop||0)-(doc &&doc.clientTop||body &&body.clientTop||0);
-	var mx=$(obj).css("marginLeft");
-	var my=$(obj).css("marginTop");
-	x-=mx==""?0:parseInt(mx.replace("px",""));
-	y-=my==""?0:parseInt(my.replace("px",""));
+	//var mx=$(obj).css("marginLeft");
+	//var my=$(obj).css("marginTop");
+	//x-=mx==""?0:parseInt(mx.replace("px",""));
+	//y-=my==""?0:parseInt(my.replace("px",""));
 	//debugger;
 	if(oX<x&&(oX+oRect.width)>x&&oY<y&&(oY+oRect.height)>y){
 		return true;
@@ -243,9 +234,17 @@ function beginClick(){
 	//cp.stop=true;
 	
 }
+function stop(){
+	config.stop=true;
+	config.acButton.val("开始点");
+	config.acButton.attr("disabled",false); 
+	config.acButton.css("background", "#FFC503");
+	config.acButton.css("color", "#C50000");
+	config.index=0;
+}
 function changPage(no){
 	if(no>config.maxIndex){
-		config.stop=true;
+		stop();
 		return;
 	}
 	if(typeof(config.seq[no])=="undefined"){
@@ -266,6 +265,7 @@ function autoclick(){
 			//var scrollX=doc &&doc.scrollLeft||body &&body.scrollLeft||0//-(doc &&doc.clientLeft||body &&body.clientLeft||0);
 			var scrollY=doc &&doc.scrollTop||body &&body.scrollTop||0//-(doc &&doc.clientTop||body &&body.clientTop||0);
 			if(cp.clicked==1&&scrollY>cp.clickY){
+				debugger;
 				changPage(++config.index);
 			}
 			//alert(cp.endTime+" "+(new Date()).getTime());
@@ -304,6 +304,7 @@ function autoclick(){
 				//alert(2);
 			}
 			var status=0;
+			//alert(cp.clickX+" "+cp.clickY);
 			element.each(function(){
 				//if(this.style.zIndex>=maxZ&&matchPosition(this,cp.clickX,cp.clickY)){
 				if(matchPosition(this,cp.clickX,cp.clickY)){
@@ -313,8 +314,6 @@ function autoclick(){
 					//alert(oRect.left+" "+oRect.right);
 					//alert(this.class);
 					//alert(this.href);
-					
-					
 					this.click();
 					status=1;
 					cp.clicked=1;
@@ -322,6 +321,7 @@ function autoclick(){
 				}
 			});
 			if(status==0&&cp.clicked==1){
+				debugger;
 				changPage(++config.index);
 			}
 			/*if(document.location!=config.url){
