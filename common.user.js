@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name 			抢你妹
+// @name 			抢你妹-通用
 // @namespace		common@yy.com
 // @author			yy
 // @developer		yy

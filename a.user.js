@@ -10,7 +10,7 @@
 // @require			
 // @icon			
 // @run-at			document-idle
-// @version 		1.0 
+// @version 		1.1 
 // @updateURL		http://gmstyy.github.io/qnm/xiaomi.user.js
 // @supportURL		http://gmstyy.github.io/qnm/	 
 // @homepage		 

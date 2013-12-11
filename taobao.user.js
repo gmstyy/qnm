@@ -1,6 +1,6 @@
 // ==UserScript==
-// @name 			抢你妹
-// @namespace		yy@com
+// @name 			抢你妹-淘宝
+// @namespace		taobao@yy.com
 // @author			yy
 // @developer		yy
 // @contributor		
