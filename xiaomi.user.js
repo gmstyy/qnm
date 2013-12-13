@@ -125,7 +125,9 @@ function init(){
 	container.append(row);
 	var newDiv=newRow(++config.maxIndex);
 	container.append(newDiv);
-	body.prepend(container);
+	var outDiv=$("<div style='z-index:10000;position: relative;'/>");
+	outDiv.append(container);
+	body.prepend(outDiv);
 	
 }
 function newRow(no){
@@ -280,7 +282,7 @@ function autoclick(){
 			//alert($("#loginBox").position().left+" "+$("#loginBox").position().top);
 			upDiv.each(function(){
 				if(matchPosition(this,cp.clickX,cp.clickY)){
-					var zi=$(this).css("zIndex");
+					var zi=$(this).css("z-index");
 					
 					if(parseInt(zi)>maxZ){
 						//alert(parseInt(zi));
