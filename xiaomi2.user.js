@@ -53,7 +53,7 @@ var config={
 			time:5
 		},
 		1: {	
-			text:"预约",
+			text:"购买手机",
 			stop:false,
 			frequent:2000,
 			time:5
