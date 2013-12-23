@@ -47,14 +47,13 @@ var config={
 			mode:1,
 			clickX:231,
 			clickY:486,
-			text:"预约购买",
 			stop:false,
 			frequent:2000,
 			time:5
 		},
 		1: {	
 			mode:2,
-			text:"购买手机",
+			text:"立即购买",
 			stop:false,
 			frequent:2000,
 			time:5

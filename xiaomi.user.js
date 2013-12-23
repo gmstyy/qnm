@@ -6,7 +6,7 @@
 // @contributor		
 // @description		抢你妹神器
 // @match			http://p.www.xiaomi.com/open/index.html*
-// @match			http://www.xiaomi.com/index.php
+// @match			file:///C:/Users/Administrator/Desktop/小米手机官网*
 // @require			
 // @icon			
 // @run-at			document-idle
@@ -260,22 +260,25 @@ function changPage(no){
 }
 function autoclick(){
 		setTimeout(function(){
+			
 			if(config.stop){
 				return;
 			}
-			var doc =document.documentElement,body =document.body;
+			/*var doc =document.documentElement,body =document.body;
 			//var scrollX=doc &&doc.scrollLeft||body &&body.scrollLeft||0//-(doc &&doc.clientLeft||body &&body.clientLeft||0);
 			var scrollY=doc &&doc.scrollTop||body &&body.scrollTop||0//-(doc &&doc.clientTop||body &&body.clientTop||0);
 			if(cp.clicked==1&&scrollY>cp.clickY){
 				debugger;
 				changPage(++config.index);
-			}
+			}*/
 			//alert(cp.endTime+" "+(new Date()).getTime());
 			//alert(new Date(cp.endTime)+" "+new Date(new Date().getTime()));
 			if(cp.endTime<(new Date()).getTime()){
 				reset();
 				return;
 			}
+			Util.showBox('dy');
+			/*
 			var upDiv=$("div");
 			var maxZ=0;
 			var topDiv="";
@@ -329,7 +332,7 @@ function autoclick(){
 			/*if(document.location!=config.url){
 				config.url=document.location;
 				changPage(++config.index);
-			}*/
-			autoclick();
+			}
+			autoclick();*/
 		},cp.frequent);
 }

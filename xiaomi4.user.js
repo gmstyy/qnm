@@ -10,8 +10,8 @@
 // @require			
 // @icon			
 // @run-at			document-idle
-// @version 		2.0
-// @updateURL		http://gmstyy.github.io/qnm/xiaomi2.user.js
+// @version 		4.0
+// @updateURL		http://gmstyy.github.io/qnm/xiaomi4.user.js
 // @supportURL		http://gmstyy.github.io/qnm/	 
 // @homepage		 
 // @contributionURL	 
@@ -35,11 +35,8 @@ var divTamplate="<tr align='center'/>";
 //盒子 762,1211
 //电源 999,1211
 var cp={
-	text:"立即购买",
-	frequent:2000,
-	time:5,
-	endTime:0
-}
+	
+};
 var config={
 	index:0,
 	maxIndex:0,
@@ -47,24 +44,28 @@ var config={
 	stop:false,
 	acButton:"",
 	seq:{0: {	
-			text:"立即购买",
+			mode:1,
+			clickX:235,
+			clickY:422,
 			stop:false,
 			frequent:2000,
 			time:5
 		},
 		1: {	
-			text:"立即购买",
+			mode:2,
+			text:"手机",
 			stop:false,
 			frequent:2000,
 			time:5
 		}
 	}
-}
+};
 //alert("2");
 init();
 
 function init(){
 	var body=$("body");
+	var pb=$(pButton);
 	var pi=$(piText);
 	var bc=$(acButton);
 	var ps=$(psButton);
@@ -74,9 +75,11 @@ function init(){
 	var psi=$(stopText);
 	var row=$(divTamplate);
 	cti.val(config.seq[0].frequent);
-	pi.val(config.seq[0].text);
+	pi.val(config.seq[0].clickX+","+config.seq[0].clickY);
 	pi.change(function(){
-		config.seq[0].text=$(this).val();
+		var pos=$(this).val().split(",");
+		config.seq[0].clickX=pos[0];
+		config.seq[0].clickY=pos[1];
 	});
 	cti.change(function(){
 		config.seq[0].frequent=$(this).val();
@@ -85,7 +88,22 @@ function init(){
 	psi.change(function(){
 		config.seq[0].time=$(this).val();
 	});
-	
+	pb.click(function(){
+		//alert(config.seq[0].clickX+" "+config.seq[0].clickY);
+		var bt=$(this);
+		bt.val("右键点位置");
+		body.mousedown(function(e){
+			if(e.which==3){
+				config.seq[0].clickX=e.pageX;
+				config.seq[0].clickY=e.pageY;
+				config.stop=false;
+				pi.val(config.seq[0].clickX+","+config.seq[0].clickY);
+				bt.val("取位置");
+				//alert(config.seq[0].clickX+" "+config.seq[0].clickY);
+				$(body).unbind("mousedown");
+			}
+		});
+	});
 	config.acButton=bc;
 	bc.click(beginClick);
 	ps.click(function(){
@@ -98,13 +116,13 @@ function init(){
 	});
 	var td1=$("<td/>").append(bc).append(ps);
 	row.append(td1);
-	var td2=$("<td/>").append("坐标:").append(pi).append("间隔:").append(cti).append("毫秒");
-	td2.append("运行:").append(psi).append("分").append(addBtn);
+	var td2=$("<td al/>").append("坐标:").append(pi).append("间隔:").append(cti).append("毫秒");
+	td2.append(pb).append("运行:").append(psi).append("分").append(addBtn);
 	row.append(td2);
 	container.append(row);
 	var newDiv=newRow(++config.maxIndex);
 	container.append(newDiv);
-	var outDiv=$("<div style='z-index:10000;position: relative;'/>");
+	var outDiv=$("<div style='z-index:10000;position: absolute;'/>");
 	outDiv.append(container);
 	body.prepend(outDiv);
 	
@@ -122,6 +140,7 @@ function newRow(no){
 	}else{
 		config.seq[no]={};
 	}
+	pi.css("width",140);
 	config.seq[no].stop=config.seq[0].stop;
 	config.seq[no].frequent=config.seq[0].frequent;
 	config.seq[no].time=config.seq[0].time;
@@ -149,7 +168,7 @@ function newRow(no){
 		bc.css("background", "#FFC503");
 		bc.css("color", "#C50000");
 	});*/
-	var td2=$("<td/>").append("坐标:").append(pi).append("间隔:").append(cti).append("毫秒");
+	var td2=$("<td/>").append("按钮:").append(pi).append("间隔:").append(cti).append("毫秒");
 	td2.append("运行:").append(psi).append("分").append(removeBtn);
 	div.append("<td/>").append(td2);
 	return div;
@@ -175,7 +194,7 @@ function matchPosition(obj,x,y){
 function reset(seq){
 	config.stop=false;
 	config.index=0;
-	config.url=document.location;
+	//config.url=document.location;
 	//cp.endTime=0;
 	$(config.acButton).attr("disabled",false); 
 	$(config.acButton).val("开始点");
@@ -215,11 +234,143 @@ function changPage(no){
 		return;
 	}
 	cp=config.seq[no];
-	config.stop=false;
+	//config.stop=false;
 	cp.clicked=0;
 	cp.endTime=((new Date()).getTime())+cp.time*60000;
 }
-
+function mode1(){
+	if(config.stop){
+		return;
+	}
+	if(cp.endTime<(new Date()).getTime()){
+		reset();
+		return;
+	}
+	var doc =document.documentElement,body =document.body;
+	//var scrollX=doc &&doc.scrollLeft||body &&body.scrollLeft||0//-(doc &&doc.clientLeft||body &&body.clientLeft||0);
+	var scrollY=doc &&doc.scrollTop||body &&body.scrollTop||0//-(doc &&doc.clientTop||body &&body.clientTop||0);
+	if(cp.clicked==1&&scrollY>cp.clickY){
+		debugger;
+		changPage(++config.index);
+	}
+	//alert(cp.endTime+" "+(new Date()).getTime());
+	//alert(new Date(cp.endTime)+" "+new Date(new Date().getTime()));
+	
+	var upDiv=$("div");
+	var maxZ=0;
+	var topDiv="";
+	//alert($("#loginBox").position().left+" "+$("#loginBox").position().top);
+	upDiv.each(function(){
+		if(matchPosition(this,cp.clickX,cp.clickY)){
+			var zi=$(this).css("z-index");
+			
+			if(parseInt(zi)>maxZ){
+				//alert(parseInt(zi));
+				maxZ=parseInt(zi);
+				topDiv=this;
+			}
+			//maxZ=parseInt(zi)>maxZ?parseInt(zi):maxZ;
+		}
+	});
+	//alert(maxZ+" "+topDiv);
+	//alert(cp.stopB);
+	//topDiv.prepend(cp.stopB);
+	//$(cp.stopB).css("zIndex",maxZ+100);
+	var flag=false;
+	var element;
+	if(topDiv==""){
+		element=$("a");
+		//alert(1);
+	}else{
+		element=$(topDiv).find("a");
+		//alert(2);
+	}
+	var status=0;
+	//alert(cp.clickX+" "+cp.clickY);
+	element.each(function(){
+		//if(this.style.zIndex>=maxZ&&matchPosition(this,cp.clickX,cp.clickY)){
+		if(matchPosition(this,cp.clickX,cp.clickY)){
+			//var oRect   =   this.getBoundingClientRect(); 
+			//alert(oRect.left+" "+oRect.right+" "+oRect.top+" "+oRect.bottom);
+			//var oRect   =   this.getBoundingClientRect(); 
+			//alert(oRect.left+" "+oRect.right);
+			//alert(this.class);
+			//alert(this.href);
+			this.click();
+			status=1;
+			cp.clicked=1;
+			return false;
+		}
+	});
+	if(status==0&&cp.clicked==1){
+		debugger;
+		changPage(++config.index);
+	}
+	/*if(document.location!=config.url){
+		config.url=document.location;
+		changPage(++config.index);
+	}*/
+	autoclick();
+}
+function mode2(){
+	if(config.stop){
+		return;
+	}
+	if(cp.endTime<(new Date()).getTime()){
+		reset();
+		return;
+	}
+	var element= $("a");
+	var status=0;
+	element.each(function(){
+		var oRect   =   this.getBoundingClientRect(); 
+		var ch = document.documentElement.clientHeight;
+		debugger;
+		var li=$(this).parents("li");
+		if($(this).html().toString().indexOf(cp.text)>=0||(li.length>0&&li.html().toString().indexOf(cp.text)>=0)){
+			debugger;
+			if(oRect.top<=0||oRect.top>ch||oRect.left<=0||oRect.width<=0||oRect.height<=0||$(this).is(":hidden")){
+				if(cp.clicked==1){
+					debugger;
+					//alert(1);
+					changPage(++config.index);
+				}
+				return;// true;
+			}
+			var upDiv=$("div");
+			var maxZ=0;
+			var topDiv="";
+			var btZ=this.style.zIndex || 1;
+			$(this).parents().each(function(){
+				btZ+=this.style.zIndex || 0;
+			});
+			upDiv.each(function(){
+				if(matchPosition(this,oRect.left,oRect.top)){
+					var zi = this.style.zIndex || 0;
+					//var zi=$(this).css("z-index");
+					if(parseInt(zi)>maxZ){
+						//alert(parseInt(zi));
+						maxZ=parseInt(zi);
+						topDiv=this;
+					}
+					//maxZ=parseInt(zi)>maxZ?parseInt(zi):maxZ;
+				}
+			});
+			if(btZ>maxZ){
+				cp.clicked=1;
+				status=1;
+				this.click();
+				return false;
+			}
+		}
+	});
+	if(status==0&&cp.clicked==1){
+		//debugger;
+		//alert(2);
+		changPage(++config.index);
+	}
+	autoclick();
+}
 function autoclick(){
 		setTimeout(function(){
 			if(config.stop){
@@ -229,126 +380,10 @@ function autoclick(){
 				reset();
 				return;
 			}
-			var element= $("a");
-			var status=0;
-			element.each(function(){
-				var oRect   =   this.getBoundingClientRect(); 
-				var ch = document.documentElement.clientHeight;
-				//debugger;
-				if($(this).html().toString().indexOf(cp.text)>=0){
-					if(oRect.top<=0||oRect.top>ch||oRect.left<=0||oRect.width<=0||oRect.height<=0||$(this).is(":hidden")){
-						if(cp.clicked==1){
-							debugger;
-							//alert(1);
-							changPage(++config.index);
-						}
-						return true;
-					}
-					var upDiv=$("div");
-					var maxZ=0;
-					var topDiv="";
-					var btZ=this.style.zIndex || 1;
-					$(this).parents().each(function(){
-						btZ+=this.style.zIndex || 0;
-					});
-					upDiv.each(function(){
-						if(matchPosition(this,oRect.left,oRect.top)){
-							var zi = this.style.zIndex || 0;
-							//var zi=$(this).css("z-index");
-							if(parseInt(zi)>maxZ){
-								//alert(parseInt(zi));
-								maxZ=parseInt(zi);
-								topDiv=this;
-							}
-							//maxZ=parseInt(zi)>maxZ?parseInt(zi):maxZ;
-						}
-					});
-					if(btZ>maxZ){
-						this.click();
-						cp.clicked=1;
-						status=1;
-						return false;
-					}
-				}
-			});
-			if(status==0&&cp.clicked==1){
-				//debugger;
-				//alert(2);
-				changPage(++config.index);
+			if(cp.mode==1){
+				mode1();
+			}else if(cp.mode==2){
+				mode2();
 			}
-			autoclick();
-			//alert($("#loginBox").position().left+" "+$("#loginBox").position().top);
-			/*
-			if(config.stop){
-				return;
-			}
-			var doc =document.documentElement,body =document.body;
-			//var scrollX=doc &&doc.scrollLeft||body &&body.scrollLeft||0//-(doc &&doc.clientLeft||body &&body.clientLeft||0);
-			var scrollY=doc &&doc.scrollTop||body &&body.scrollTop||0//-(doc &&doc.clientTop||body &&body.clientTop||0);
-			if(cp.clicked==1&&scrollY>cp.clickY){
-				debugger;
-				changPage(++config.index);
-			}
-			//alert(cp.endTime+" "+(new Date()).getTime());
-			//alert(new Date(cp.endTime)+" "+new Date(new Date().getTime()));
-			if(cp.endTime<(new Date()).getTime()){
-				reset();
-				return;
-			}
-			var upDiv=$("div");
-			var maxZ=0;
-			var topDiv="";
-			//alert($("#loginBox").position().left+" "+$("#loginBox").position().top);
-			upDiv.each(function(){
-				if(matchPosition(this,cp.clickX,cp.clickY)){
-					var zi=$(this).css("zIndex");
-					
-					if(parseInt(zi)>maxZ){
-						//alert(parseInt(zi));
-						maxZ=parseInt(zi);
-						topDiv=this;
-					}
-					//maxZ=parseInt(zi)>maxZ?parseInt(zi):maxZ;
-				}
-			});
-			//alert(maxZ+" "+topDiv);
-			//alert(cp.stopB);
-			//topDiv.prepend(cp.stopB);
-			//$(cp.stopB).css("zIndex",maxZ+100);
-			var flag=false;
-			var element;
-			if(topDiv==""){
-				element=$("a");
-				//alert(1);
-			}else{
-				element=$(topDiv).find("a");
-				//alert(2);
-			}
-			var status=0;
-			//alert(cp.clickX+" "+cp.clickY);
-			element.each(function(){
-				//if(this.style.zIndex>=maxZ&&matchPosition(this,cp.clickX,cp.clickY)){
-				if(matchPosition(this,cp.clickX,cp.clickY)){
-					//var oRect   =   this.getBoundingClientRect(); 
-					//alert(oRect.left+" "+oRect.right+" "+oRect.top+" "+oRect.bottom);
-					//var oRect   =   this.getBoundingClientRect(); 
-					//alert(oRect.left+" "+oRect.right);
-					//alert(this.class);
-					//alert(this.href);
-					this.click();
-					status=1;
-					cp.clicked=1;
-					return false;
-				}
-			});
-			if(status==0&&cp.clicked==1){
-				debugger;
-				changPage(++config.index);
-			}
-			//if(document.location!=config.url){
-			//	config.url=document.location;
-			//	changPage(++config.index);
-			//}
-			autoclick();*/
 		},cp.frequent);
 }
