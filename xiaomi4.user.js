@@ -113,9 +113,21 @@ function init(){
 		var newDiv=newRow(++config.maxIndex);
 		container.append(newDiv);
 	});
+	var td1=$("<div style='z-index:10000;position: absolute;width:125px;margin-left: 3%;'/>").append(bc).append(ps);
+	var td2=$("<td/>").append("坐标:").append(pi).append("间隔:").append(cti).append("毫秒");
+	td2.append(pb).append("运行:").append(psi).append("分").append(addBtn);
+	row.append(td2);
+	container.append(row);
+	var newDiv=newRow(++config.maxIndex);
+	container.append(newDiv);
+	var outDiv=$("<div style='z-index:10000;position: absolute;margin-left: 20%;'/>");
+	outDiv.append(container);
+	body.prepend(outDiv);
+	body.prepend(td1);
+/*	
 	var td1=$("<td/>").append(bc).append(ps);
-	row.append(td1).append($("<td style='width:200px;'/>"));
-	var td2=$("<td al/>").append("坐标:").append(pi).append("间隔:").append(cti).append("毫秒");
+	row.append(td1);
+	var td2=$("<td style='width:200px;'/>").append("坐标:").append(pi).append("间隔:").append(cti).append("毫秒");
 	td2.append(pb).append("运行:").append(psi).append("分").append(addBtn);
 	row.append(td2);
 	container.append(row);
@@ -123,7 +135,10 @@ function init(){
 	container.append(newDiv);
 	var outDiv=$("<div style='z-index:10000;position: absolute;'/>");
 	outDiv.append(container);
+	body.prepend(td1);
 	body.prepend(outDiv);
+	*/
+	
 	
 }
 function newRow(no){
@@ -169,7 +184,7 @@ function newRow(no){
 	});*/
 	var td2=$("<td/>").append("按钮:").append(pi).append("间隔:").append(cti).append("毫秒");
 	td2.append("运行:").append(psi).append("分").append(removeBtn);
-	div.append("<td/>").append($("<td style='width:200px;'/>")).append(td2);
+	div.append(td2);
 	return div;
 }
 function matchPosition(obj,x,y){
