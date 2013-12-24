@@ -5,8 +5,7 @@
 // @developer		yy
 // @contributor		
 // @description		抢你妹神器
-// @match			http://p.www.xiaomi.com/open/index.html*
-// @match			http://www.xiaomi.com/index.php
+// @match			http://p.www.xiaomi.com/open/index.html* 
 // @require			
 // @icon			
 // @run-at			document-idle
