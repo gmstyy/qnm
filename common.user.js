@@ -10,6 +10,7 @@
 // @match			http://www.taobao.com/*
 // @match			http://detail.tmall.com/*
 // @match			http://miao.item.taobao.com/*
+// @match			http://huodong.xiaomi.com/nianhuo2014/*
 // @require			
 // @icon			
 // @run-at			document-idle
