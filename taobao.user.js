@@ -5,13 +5,8 @@
 // @developer		yy
 // @contributor		
 // @description		抢你妹神器
-// @match			http://p.www.xiaomi.com/open/index.html
-// @match			http://www.xiaomi.com/index.php
-// @match			https://kyfw.12306.cn/otn/leftTicket/init
-// @match			http://kyfw.12306.cn/otn/leftTicket/init
-// @match		http://www.taobao.com/go/market/2013/1212/main.php
-// @match		http://miao.item.taobao.com/36329491755.htm*
-// @match	 http://miao.item.taobao.com/36337224540.htm*
+// @match		http://detail.tmall.com/*
+// @match		http://miao.item.taobao.com/*
 // @require			
 // @icon			
 // @run-at			document-idle

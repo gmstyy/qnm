@@ -5,13 +5,7 @@
 // @developer		yy
 // @contributor		
 // @description		抢你妹神器
-// @match			https://kyfw.12306.cn/otn/leftTicket/init
-// @match			http://kyfw.12306.cn/otn/leftTicket/init
-// @match		http://www.taobao.com/go/market/2013/1212/main.php*
-// @match		http://miao.item.taobao.com/36329491755.htm*
-// @match	 http://miao.item.taobao.com/36337224540.htm*
-// @require			
-// @icon			
+// @match			http://detail.tmall.com/*
 // @run-at			document-idle
 // @version 		1.0 
 // @updateURL		http://gmstyy.github.io/qnm/common.user.js
