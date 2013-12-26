@@ -129,7 +129,7 @@ function init(){
 	container.append(row);
 	/*var newDiv=newRow(++config.maxIndex);
 	container.append(newDiv);*/
-	var outDiv=$("<div style='z-index:100000;margin-left: 20%;'/>");
+	var outDiv=$("<div style='z-index:100000;position: absolute;margin-left: 20%;color:white;'/>");
 	outDiv.append(container);
 	for(var key in config.comfirm){
 		debugger;
@@ -217,6 +217,7 @@ function reset(seq){
 	$(config.acButton).css("color", "#C50000");
 }
 function beginClick(){
+	config.stop=false;
 	config.index=0;
 	changPage(0);
 	autoclick();
@@ -292,10 +293,10 @@ function mode1(){
 	var flag=false;
 	var element;
 	if(topDiv==""){
-		element=$("a");
+		element=$(cp.type);
 		//alert(1);
 	}else{
-		element=$(topDiv).find("a");
+		element=$(topDiv).find(cp.type);
 		//alert(2);
 	}
 	var status=0;
@@ -309,6 +310,12 @@ function mode1(){
 			//alert(oRect.left+" "+oRect.right);
 			//alert(this.class);
 			//alert(this.href);
+			this.focus();
+				var btnTmp=this;
+				$(btnTmp).blur(function(){
+					changPage(++config.index);
+					$(btnTmp).unbind("blur");
+			});
 			this.click();
 			status=1;
 			cp.clicked=1;
@@ -327,14 +334,14 @@ function mode1(){
 }
 function mode2(){
 	
-	var element= $("a");
+	var element= $(cp.type);
 	var status=0;
 	element.each(function(){
 		var oRect   =   this.getBoundingClientRect(); 
 		var ch = document.documentElement.clientHeight;
 		debugger;
 		var li=$(this).parents("li");
-		if($(this).html().toString().indexOf(cp.text)>=0||(li.length>0&&li.html().toString().indexOf(cp.text)>=0)){
+		if($(this).html().toString().indexOf(cp.text)>=0||$(this).val().indexOf(cp.text)>=0||(li.length>0&&li.html().toString().indexOf(cp.text)>=0)){
 			debugger;
 			if(oRect.top<=0||oRect.top>ch||oRect.left<=0||oRect.width<=0||oRect.height<=0||$(this).is(":hidden")){
 				if(cp.clicked==1){
@@ -385,16 +392,22 @@ function mode2(){
 	autoclick();
 }
 function mode3(){
-	var element= $("a");
+	var element= $(cp.type);
 	element.each(function(){
 		var oRect   =   this.getBoundingClientRect(); 
 		var ch = document.documentElement.clientHeight;
 		debugger;
-		if($(this).html().toString().indexOf(text)>=0){
+		if($(this).html().toString().indexOf(cp.text)>=0||$(this).val().indexOf(cp.text)>=0){
 			debugger;
 			if($(this).is(":hidden")){
 				return;// true;
 			}
+			this.focus();
+			var btnTmp=this;
+			$(btnTmp).blur(function(){
+				changPage(++config.index);
+				$(btnTmp).unbind("blur");
+			});
 			this.click();
 		}
 	});
@@ -418,4 +431,3 @@ function autoclick(){
 			}
 		},cp.frequent);
 }
-
