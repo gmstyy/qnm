@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name 			抢你妹-小米
-// @namespace		xiaomi@yy.com
+// @namespace		xiaomi-nh@yy.com
 // @author			yy
 // @developer		yy
 // @contributor		
@@ -11,7 +11,7 @@
 // @require			
 // @icon			
 // @run-at			document-idle
-// @version 		5.0
+// @version 		1.0
 // @updateURL		http://gmstyy.github.io/qnm/xiaomi5.user.js
 // @supportURL		http://gmstyy.github.io/qnm/	 
 // @homepage		 
@@ -145,6 +145,22 @@ function init(){
 	}
 	body.prepend(outDiv);
 	body.prepend(td1);
+	debugger;
+	var cov=getCo("xmxxxx");
+	if(cov!=""&&cov!=null){
+		var strs=cov.split(",");
+		if(strs.length>1){
+			cp.clickX=parseInt(strs[0]);
+			cp.clickY=parseInt(strs[1]);
+			cp.mode=1;
+			pi.val(cp.clickX+","+cp.clickY);
+		}else{
+			cp.text=strs;
+			cp.mode=2;
+			pi.val(cp.text);
+		}
+		beginClick();
+	}
 }
 function newRow(no){
 	var pi=$(piText);
@@ -224,12 +240,17 @@ function beginClick(){
 	config.stop=false;
 	config.index=0;
 	changPage(0);
+	var text=cp.text||cp.clickX+","+cp.clickY;
+	setCo("xmxxxx",text);
 	autoclick();
 	$(config.acButton).val("进行中");
 	$(config.acButton).css("background", "#E5E5E5");
 	$(config.acButton).css("color", "white");
 	$(config.acButton).attr("disabled",true); 
-
+	setTimeout(function(){
+			debugger;
+			window.location.reload();
+	},cp.frequent);
 	//	return;
 	//}
 	//$(cp.acButton).val("开始点");
@@ -247,6 +268,7 @@ function stop(){
 	config.acButton.css("background", "#FFC503");
 	config.acButton.css("color", "#C50000");
 	config.index=0;
+	delCo("xmxxxx");
 }
 function changPage(no){
 	if(no>config.maxIndex){
@@ -406,13 +428,28 @@ function mode3(){
 			if($(this).is(":hidden")){
 				return;// true;
 			}
-			this.focus();
-			var btnTmp=this;
-			$(btnTmp).blur(function(){
-				changPage(++config.index);
-				$(btnTmp).unbind("blur");
+			var upDiv=$("div");
+			upDiv.each(function(){
+				if(matchPosition(this,oRect.top,oRect.left)){
+					var zi=$(this).css("z-index");
+					
+					if(parseInt(zi)>maxZ){
+						//alert(parseInt(zi));
+						maxZ=parseInt(zi);
+						topDiv=this;
+					}
+					//maxZ=parseInt(zi)>maxZ?parseInt(zi):maxZ;
+				}
 			});
-			this.click();
+			if(maxZ<=$(this).css("z-index")){
+				this.focus();
+				var btnTmp=this;
+				$(btnTmp).blur(function(){
+					changPage(++config.index);
+					$(btnTmp).unbind("blur");
+				});
+				this.click();
+			}
 		}
 	});
 	autoclick();
@@ -434,4 +471,24 @@ function autoclick(){
 				mode3();	
 			}
 		},cp.frequent);
+}
+function getCo(name)   
+{
+    var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+    if(arr != null) return unescape(arr[2]); return null;
+
+}
+function setCo(name,value)//两个参数，一个是cookie的名子，一个是值
+{
+    var Days = 1; //此 cookie 将被保存 30 天
+    var exp = new Date();    //new Date("December 31, 9998");
+    exp.setTime(exp.getTime() + Days*24*60*60*1000);
+    document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+}
+function delCo(name)//删除cookie
+{
+    var exp = new Date();
+    exp.setTime(exp.getTime() - 1);
+    var cval=getCo(name);
+    if(cval!=null) document.cookie= name + "="+cval+";expires="+exp.toGMTString();
 }
