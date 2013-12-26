@@ -46,8 +46,8 @@ var config={
 	acButton:"",
 	seq:{0: {	
 			mode:1,
-			clickX:235,
-			clickY:422,
+			clickX:577,
+			clickY:844,
 			stop:false,
 			frequent:2000,
 			time:5
