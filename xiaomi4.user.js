@@ -9,7 +9,7 @@
 // @require			
 // @icon			
 // @run-at			document-idle
-// @version 		4.0
+// @version 		4.1
 // @updateURL		http://gmstyy.github.io/qnm/xiaomi4.user.js
 // @supportURL		http://gmstyy.github.io/qnm/	 
 // @homepage		 
@@ -68,8 +68,8 @@ function init(){
 	var pi=$(piText);
 	var bc=$(acButton);
 	var ps=$(psButton);
-	var addBtn=$(addButton);
-	var removeBtn=$(remButton);
+	//var addBtn=$(addButton);
+	//var removeBtn=$(remButton);
 	var cti=$(frequentText);
 	var psi=$(stopText);
 	var row=$(divTamplate);
@@ -109,18 +109,18 @@ function init(){
 		stop();
 	});
 	var container=$("<table/>");
-	addBtn.click(function(){
+	/*addBtn.click(function(){
 		var newDiv=newRow(++config.maxIndex);
 		container.append(newDiv);
-	});
-	var td1=$("<div style='z-index:10000;position: absolute;width:125px;margin-left: 3%;'/>").append(bc).append(ps);
+	});*/
+	var td1=$("<div style='z-index:10000;position: absolute;width:125px;margin-left: 2.5%;'/>").append(bc).append(ps);
 	var td2=$("<td/>").append("坐标:").append(pi).append("间隔:").append(cti).append("毫秒");
-	td2.append(pb).append("运行:").append(psi).append("分").append(addBtn);
+	td2.append(pb).append("运行:").append(psi).append("分");//.append(addBtn);
 	row.append(td2);
 	container.append(row);
 	var newDiv=newRow(++config.maxIndex);
 	container.append(newDiv);
-	var outDiv=$("<div style='z-index:10000;position: absolute;margin-left: 20%;color:white;'/>");
+	var outDiv=$("<div style='z-index:10000;position: absolute;margin-left: 18%;color:white;'/>");
 	outDiv.append(container);
 	body.prepend(outDiv);
 	body.prepend(td1);
@@ -145,7 +145,7 @@ function newRow(no){
 	var pi=$(piText);
 	//var bc=$(acButton);
 	//var ps=$(psButton);
-	var removeBtn=$(remButton);
+	//var removeBtn=$(remButton);
 	var cti=$(frequentText);
 	var psi=$(stopText);
 	var div=$(divTamplate);
@@ -169,10 +169,10 @@ function newRow(no){
 	psi.change(function(){
 		config.seq[no].time=$(this).val();
 	});
-	removeBtn.click(function(){
+	/*removeBtn.click(function(){
 		delete config.seq[no];
 		$(this.parentNode).remove();
-	});
+	});*/
 	//config.seq[no].acButton=bc;
 	//bc.click(beginClick);
 	/*ps.click(function(){
@@ -183,7 +183,7 @@ function newRow(no){
 		bc.css("color", "#C50000");
 	});*/
 	var td2=$("<td/>").append("按钮:").append(pi).append("间隔:").append(cti).append("毫秒");
-	td2.append("运行:").append(psi).append("分").append(removeBtn);
+	td2.append("运行:").append(psi).append("分");//.append(removeBtn);
 	div.append(td2);
 	return div;
 }
