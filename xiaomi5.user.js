@@ -147,8 +147,11 @@ function init(){
 	body.prepend(td1);
 	debugger;
 	var cov=getCo("xmxxxx");
+	var cos=getCo("xmxxxs");
 	if(cov!=""&&cov!=null){
 		var strs=cov.split(",");
+		cp.frequent=parseInt(cos);
+		cti.val(cos);
 		if(strs.length>1){
 			cp.clickX=parseInt(strs[0]);
 			cp.clickY=parseInt(strs[1]);
@@ -242,6 +245,7 @@ function beginClick(){
 	changPage(0);
 	var text=cp.text||cp.clickX+","+cp.clickY;
 	setCo("xmxxxx",text);
+	setCo("xmxxxs",cp.frequent);
 	autoclick();
 	$(config.acButton).val("进行中");
 	$(config.acButton).css("background", "#E5E5E5");
@@ -269,6 +273,7 @@ function stop(){
 	config.acButton.css("color", "#C50000");
 	config.index=0;
 	delCo("xmxxxx");
+	delCo("xmxxxs");
 }
 function changPage(no){
 	if(no>config.maxIndex){
