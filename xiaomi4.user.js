@@ -120,7 +120,7 @@ function init(){
 	container.append(row);
 	var newDiv=newRow(++config.maxIndex);
 	container.append(newDiv);
-	var outDiv=$("<div style='z-index:10000;position: absolute;margin-left: 20%;'/>");
+	var outDiv=$("<div style='z-index:10000;position: absolute;margin-left: 20%;color:white;'/>");
 	outDiv.append(container);
 	body.prepend(outDiv);
 	body.prepend(td1);
