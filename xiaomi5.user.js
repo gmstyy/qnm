@@ -99,10 +99,10 @@ function matchPosition(obj,x,y){
 	var doc =document.documentElement,body =document.body;
 	var oX=oRect.left+(doc &&doc.scrollLeft||body &&body.scrollLeft||0)-(doc &&doc.clientLeft||body &&body.clientLeft||0);
 	var oY=oRect.top+(doc &&doc.scrollTop||body &&body.scrollTop||0)-(doc &&doc.clientTop||body &&body.clientTop||0);
-	var mx=$(obj).css("marginLeft");
-	var my=$(obj).css("marginTop");
-	x-=mx==""?0:parseInt(mx.replace("px",""));
-	y-=my==""?0:parseInt(my.replace("px",""));
+	//var mx=$(obj).css("marginLeft");
+	//var my=$(obj).css("marginTop");
+	//x-=mx==""?0:parseInt(mx.replace("px",""));
+	//y-=my==""?0:parseInt(my.replace("px",""));
 	//debugger;
 	if(oX<x&&(oX+oRect.width)>x&&oY<y&&(oY+oRect.height)>y){
 		return true;
@@ -167,6 +167,7 @@ function autoclick(){
 			//alert(cp.stopB);
 			//topDiv.prepend(cp.stopB);
 			//$(cp.stopB).css("zIndex",maxZ+100);
+			debugger;
 			var flag=false;
 			var element;
 			if(topDiv==""){
@@ -188,6 +189,7 @@ function autoclick(){
 					//手机 272,1181
 					//盒子 762,1180
 					//电源 999,1179
+					debugger;
 					this.focus();
 					$(this).blur(function(){
 					  cp.stop=true;
