@@ -7,7 +7,7 @@
 // @description		抢你妹神器
 // @match		http://detail.tmall.com/*
 // @match		http://miao.item.taobao.com/*
-// @match		http://buy.tmall.com/order/confirm.htm*
+// @match		http://buy.tmall.com/order/confirm_order.htm*
 // @match		http://buy.tmall.com/error.htm*
 // @require			
 // @icon			
