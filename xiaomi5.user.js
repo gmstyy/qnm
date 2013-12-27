@@ -434,7 +434,7 @@ function mode3(){
 				return;// true;
 			}
 			var maxZ=0;
-			var upDiv=$("div");
+			/*var upDiv=$("div");
 			upDiv.each(function(){
 				if(matchPosition(this,oRect.top,oRect.left)){
 					var zi=$(this).css("z-index");
@@ -446,7 +446,7 @@ function mode3(){
 					}
 					//maxZ=parseInt(zi)>maxZ?parseInt(zi):maxZ;
 				}
-			});
+			});*/
 			//if(maxZ<=$(this).css("z-index")){
 				this.focus();
 				var btnTmp=this;
