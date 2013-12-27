@@ -433,6 +433,7 @@ function mode3(){
 			if($(this).is(":hidden")){
 				return;// true;
 			}
+			var maxZ=0;
 			var upDiv=$("div");
 			upDiv.each(function(){
 				if(matchPosition(this,oRect.top,oRect.left)){
