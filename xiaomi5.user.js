@@ -145,6 +145,7 @@ function init(){
 	}
 	body.prepend(outDiv);
 	body.prepend(td1);
+	changPage(0);
 	debugger;
 	var cov=getCo("xmxxxx");
 	var cos=getCo("xmxxxs");
@@ -242,7 +243,6 @@ function reset(seq){
 function beginClick(){
 	config.stop=false;
 	config.index=0;
-	changPage(0);
 	var text=cp.text||cp.clickX+","+cp.clickY;
 	setCo("xmxxxx",text);
 	setCo("xmxxxs",cp.frequent);
