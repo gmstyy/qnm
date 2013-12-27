@@ -447,7 +447,7 @@ function mode3(){
 					//maxZ=parseInt(zi)>maxZ?parseInt(zi):maxZ;
 				}
 			});
-			if(maxZ<=$(this).css("z-index")){
+			//if(maxZ<=$(this).css("z-index")){
 				this.focus();
 				var btnTmp=this;
 				$(btnTmp).blur(function(){
@@ -455,7 +455,7 @@ function mode3(){
 					$(btnTmp).unbind("blur");
 				});
 				this.click();
-			}
+			//}
 		}
 	});
 	autoclick();
