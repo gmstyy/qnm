@@ -135,20 +135,22 @@ function init(){
 	container.append(newDiv);*/
 	var outDiv=$("<div style='z-index:100000;position: absolute;margin-left: 20%;color:white;'/>");
 	outDiv.append(container);
-	for(var key in config.comfirm){
-		debugger;
-		if(document.location.href.indexOf(key)>-1){
-			confirm(config.comfirm[key]);
-			body.prepend(td1);
-			return;
+	debugger;
+	var cov=getCo("xmxxxx");
+	var cos=getCo("xmxxxs");
+	if(cov!=""&&cov!=null){
+		for(var key in config.comfirm){
+			debugger;
+			if(document.location.href.indexOf(key)>-1){
+				confirm(config.comfirm[key]);
+				body.prepend(td1);
+				return;
+			}
 		}
 	}
 	body.prepend(outDiv);
 	body.prepend(td1);
 	changPage(0);
-	debugger;
-	var cov=getCo("xmxxxx");
-	var cos=getCo("xmxxxs");
 	if(cov!=""&&cov!=null){
 		var strs=cov.split(",");
 		cp.frequent=parseInt(cos);
