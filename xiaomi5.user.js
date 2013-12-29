@@ -11,7 +11,7 @@
 // @require			
 // @icon			
 // @run-at			document-idle
-// @version 		1.0
+// @version 		1.1
 // @updateURL		http://gmstyy.github.io/qnm/xiaomi5.user.js
 // @supportURL		http://gmstyy.github.io/qnm/	 
 // @homepage		 
@@ -61,15 +61,15 @@ var config={
 				time:2,
 				type:"a"
 			}
-			/*,
+			,
 			"order.xiaomi.com/buy/checkout":{	
 				mode:3,
-				text:"立即下单",
+				text:"返回",
 				stop:false,
 				frequent:150,
 				time:2,
-				type:"input"
-			}*/
+				type:"a"
+			}
 	}
 };
 //alert("2");
@@ -136,9 +136,7 @@ function init(){
 	var outDiv=$("<div style='z-index:100000;position: absolute;margin-left: 20%;color:white;'/>");
 	outDiv.append(container);
 	debugger;
-	var cov=getCo("xmxxxx");
-	var cos=getCo("xmxxxs");
-	if(cov!=""&&cov!=null){
+	//if(cos!="1"&&cos!=null){
 		for(var key in config.comfirm){
 			debugger;
 			if(document.location.href.indexOf(key)>-1){
@@ -147,14 +145,17 @@ function init(){
 				return;
 			}
 		}
-	}
+	//}
 	body.prepend(outDiv);
 	body.prepend(td1);
 	changPage(0);
+	var cov=getCo("xmxxxx");
+	var cot=getCo("xmxxxt");
+	var cos=getCo("xmxxxs");
 	if(cov!=""&&cov!=null){
 		var strs=cov.split(",");
-		cp.frequent=parseInt(cos);
-		cti.val(cos);
+		cp.frequent=parseInt(cot);
+		cti.val(cot);
 		if(strs.length>1){
 			cp.clickX=parseInt(strs[0]);
 			cp.clickY=parseInt(strs[1]);
@@ -165,6 +166,9 @@ function init(){
 			cp.mode=2;
 			pi.val(cp.text);
 		}
+		
+	}
+	if(cos!=""&&cos!=null){
 		beginClick();
 	}
 }
@@ -247,7 +251,8 @@ function beginClick(){
 	config.index=0;
 	var text=cp.text||cp.clickX+","+cp.clickY;
 	setCo("xmxxxx",text);
-	setCo("xmxxxs",cp.frequent);
+	setCo("xmxxxt",cp.frequent);
+	setCo("xmxxxs","1");
 	autoclick();
 	$(config.acButton).val("进行中");
 	$(config.acButton).css("background", "#E5E5E5");
@@ -274,7 +279,6 @@ function stop(){
 	config.acButton.css("background", "#FFC503");
 	config.acButton.css("color", "#C50000");
 	config.index=0;
-	delCo("xmxxxx");
 	delCo("xmxxxs");
 }
 function changPage(no){
