@@ -7,7 +7,7 @@
 // @description		抢你妹神器
 // @match			http://huodong.xiaomi.com/nianhuo2014/* 
 // @match			http://order.xiaomi.com/cart/* 
-// @match			http://order.xiaomi.com/buy/checkout/* 
+// @match			http://order.xiaomi.com/buy/checkout*
 // @require			
 // @icon			
 // @run-at			document-idle
@@ -270,6 +270,27 @@ function beginClick(){
 }
 function confirm(data){
 	cp=data;
+	if(document.location.href.indexOf("order.xiaomi.com/buy/checkout")>-1&&$("#checkoutToPay").length>0){
+		$("#checkoutAddrList").find("dl").each(function(){this.click();return false;});
+		$("input[name='Checkout[best_time]']").each(function(){
+			var li=$(this).parents("li");
+			if(li.length>0&&li.html().toString().indexOf("工作日")>=0)
+			{
+				$(this).attr("checked",true);
+				return false;
+			}
+		});
+		$("input[name='Checkout[best_time]']").each(function(){
+			var li=$(this).parents("li");
+			if(li.length>0&&li.html().toString().indexOf("工作日")>=0)
+			{
+				$(this).attr("checked",true);
+				return false;
+			}
+		});
+		$("#checkoutToPay").each(function(){this.click();return false;});
+		return;
+	}
 	autoclick();
 }
 function stop(){
