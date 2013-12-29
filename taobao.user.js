@@ -29,6 +29,7 @@ var psButton="<input style='background:#FFC503;color:#C50000;height:30px;width:6
 var addButton="<input style='background:#FFC503;color:#C50000;height:30px;width:30px;'  type='button' value='+'/>";
 var remButton="<input style='background:#FFC503;color:#C50000;height:30px;width:30px;'  type='button' value='-'/>";
 var piText="<input type='text' style='height:20px;width:60px;'/>";
+var prText="<input type='text' style='height:20px;width:60px;'/>";
 var frequentText="<input type='text'  style='height:20px;width:50px;text-align:right;'/>";
 var stopText="<input type='text'  style='height:20px;width:30px;text-align:right;'/>";
 var divTamplate="<tr align='center'/>";
@@ -50,14 +51,16 @@ var config={
 			clickY:844,
 			stop:false,
 			frequent:2000,
-			time:5
+			time:5,
+			resize:80
 		},
 		1: {	
 			mode:3,
 			text:"手机",
 			stop:false,
 			frequent:2000,
-			time:5
+			time:5,
+			resize:80
 		}
 	},
 	comfirm:{"buy.tmall.com/order/confirm_order.htm":{	
@@ -75,6 +78,7 @@ function init(){
 	var body=$("body");
 	var pb=$(pButton);
 	var pi=$(piText);
+	var pr=$(prText);
 	var bc=$(acButton);
 	var ps=$(psButton);
 	var addBtn=$(addButton);
@@ -84,10 +88,14 @@ function init(){
 	var row=$(divTamplate);
 	cti.val(config.seq[0].frequent);
 	pi.val(config.seq[0].clickX+","+config.seq[0].clickY);
+	pr.val(config.seq[0].resize);
 	pi.change(function(){
 		var pos=$(this).val().split(",");
 		config.seq[0].clickX=pos[0];
 		config.seq[0].clickY=pos[1];
+	});
+	pr.change(function(){
+		config.seq[0].resize=$(this).val();
 	});
 	cti.change(function(){
 		config.seq[0].frequent=$(this).val();
@@ -123,7 +131,7 @@ function init(){
 		container.append(newDiv);
 	});*/
 	var td1=$("<div style='z-index:100000;position: absolute;width:125px;margin-left: 3%;'/>").append(bc).append(ps);
-	var td2=$("<td/>").append("坐标:").append(pi).append("间隔:").append(cti).append("毫秒");
+	var td2=$("<td/>").append("坐标:").append(pi).append(pr).append("间隔:").append(cti).append("毫秒");
 	td2.append(pb).append("运行:").append(psi).append("分");//.append(addBtn);
 	row.append(td2);
 	container.append(row);
@@ -188,11 +196,12 @@ function newRow(no){
 	div.append(td2);
 	return div;
 }
-function matchPosition(obj,x,y){
+function matchPosition(obj,x,y,resize){
 	var oRect   =   obj.getBoundingClientRect(); 
 	var doc =document.documentElement,body =document.body;
 	var oX=oRect.left+(doc &&doc.scrollLeft||body &&body.scrollLeft||0)-(doc &&doc.clientLeft||body &&body.clientLeft||0);
 	var oY=oRect.top+(doc &&doc.scrollTop||body &&body.scrollTop||0)-(doc &&doc.clientTop||body &&body.clientTop||0);
+	resize=resize||0;
 	//var mx=$(obj).css("marginLeft");
 	//var my=$(obj).css("marginTop");
 	//x-=mx==""?0:parseInt(mx.replace("px",""));
@@ -200,7 +209,7 @@ function matchPosition(obj,x,y){
 	//debugger;
 	//var oX=oRect.left;
 	//var oY=oRect.top;
-	if(oX<x&&(oX+oRect.width)>x&&oY<y&&(oY+oRect.height)>y){
+	if(oX-resize<x&&(oX+oRect.width+resize)>x&&oY-resize<y&&(oY+oRect.height+resize)>y){
 		return true;
 	}
 	return false;
