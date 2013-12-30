@@ -6,8 +6,9 @@
 // @contributor		
 // @description		抢你妹神器
 // @match			http://huodong.xiaomi.com/nianhuo2014/* 
-// @match			http://order.xiaomi.com/cart/* 
+// @match			http://order.xiaomi.com/cart* 
 // @match			http://order.xiaomi.com/buy/checkout*
+// @match			http://order.xiaomi.com/cart/add/2135000541
 // @require			
 // @icon			
 // @run-at			document-idle
@@ -289,6 +290,9 @@ function confirm(data){
 			}
 		});
 		$("#checkoutToPay").each(function(){this.click();return false;});
+		return;
+	}else if(document.location.href.indexOf("order.xiaomi.com/cart/add/2135000541")>-1){
+		window.location.reload();
 		return;
 	}
 	autoclick();
