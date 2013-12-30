@@ -52,23 +52,17 @@ var config={
 			stop:false,
 			frequent:2000,
 			time:5,
-			resize:80
-		},
-		1: {	
-			mode:3,
-			text:"手机",
-			stop:false,
-			frequent:2000,
-			time:5,
-			resize:80
+			resize:80,
+			type:"a"
 		}
 	},
 	comfirm:{"buy.tmall.com/order/confirm_order.htm":{	
 			mode:3,
-			text:"确认",
+			text:"提交订单",
 			stop:false,
 			frequent:150,
-			time:2
+			time:2,
+			type:"button"
 	}}
 };
 //alert("2");
@@ -197,6 +191,9 @@ function newRow(no){
 	return div;
 }
 function matchPosition(obj,x,y,resize){
+	if($(obj).html().indexOf("立刻购买")>-1){
+		debugger;
+	}
 	var oRect   =   obj.getBoundingClientRect(); 
 	var doc =document.documentElement,body =document.body;
 	var oX=oRect.left+(doc &&doc.scrollLeft||body &&body.scrollLeft||0)-(doc &&doc.clientLeft||body &&body.clientLeft||0);
@@ -302,6 +299,7 @@ function mode1(){
 	//topDiv.prepend(cp.stopB);
 	//$(cp.stopB).css("zIndex",maxZ+100);
 	var flag=false;
+	debugger;
 	var element;
 	if(topDiv==""){
 		element=$(cp.type);
@@ -314,7 +312,7 @@ function mode1(){
 	//alert(cp.clickX+" "+cp.clickY);
 	element.each(function(){
 		//if(this.style.zIndex>=maxZ&&matchPosition(this,cp.clickX,cp.clickY)){
-		if(matchPosition(this,cp.clickX,cp.clickY)){
+		if(matchPosition(this,cp.clickX,cp.clickY,cp.resize)){
 			//var oRect   =   this.getBoundingClientRect(); 
 			//alert(oRect.left+" "+oRect.right+" "+oRect.top+" "+oRect.bottom);
 			//var oRect   =   this.getBoundingClientRect(); 
