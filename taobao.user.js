@@ -52,7 +52,7 @@ var config={
 			stop:false,
 			frequent:2000,
 			time:5,
-			resize:80,
+			resize:15,
 			type:"a"
 		}
 	},
@@ -85,8 +85,14 @@ function init(){
 	pr.val(config.seq[0].resize);
 	pi.change(function(){
 		var pos=$(this).val().split(",");
-		config.seq[0].clickX=pos[0];
-		config.seq[0].clickY=pos[1];
+		if(pos.length>1){
+			config.seq[0].clickX=pos[0];
+			config.seq[0].clickY=pos[1];
+			config.seq[0].mode=1;
+		}else{
+			config.seq[0].text=$(this).val();
+			config.seq[0].mode=3;
+		}
 	});
 	pr.change(function(){
 		config.seq[0].resize=$(this).val();

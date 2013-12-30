@@ -77,8 +77,14 @@ function init(){
 	pi.val(config.seq[0].clickX+","+config.seq[0].clickY);
 	pi.change(function(){
 		var pos=$(this).val().split(",");
-		config.seq[0].clickX=pos[0];
-		config.seq[0].clickY=pos[1];
+		if(pos.length>1){
+			config.seq[0].clickX=pos[0];
+			config.seq[0].clickY=pos[1];
+			config.seq[0].mode=1;
+		}else{
+			config.seq[0].text=$(this).val();
+			config.seq[0].mode=2;
+		}
 	});
 	cti.change(function(){
 		config.seq[0].frequent=$(this).val();
@@ -310,6 +316,12 @@ function mode1(){
 			//alert(oRect.left+" "+oRect.right);
 			//alert(this.class);
 			//alert(this.href);
+			config.acButton.focus();
+			$(config.acButton).blur(function(){
+				debugger;
+				changPage(++config.index);
+				$(config.acButton).unbind("blur");
+			});
 			this.click();
 			status=1;
 			cp.clicked=1;
@@ -373,6 +385,12 @@ function mode2(){
 			if(btZ>maxZ){
 				cp.clicked=1;
 				status=1;
+				config.acButton.focus();
+				$(config.acButton).blur(function(){
+					debugger;
+					changPage(++config.index);
+					$(config.acButton).unbind("blur");
+				});
 				this.click();
 				return false;
 			}

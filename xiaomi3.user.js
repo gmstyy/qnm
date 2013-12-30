@@ -5,13 +5,12 @@
 // @developer		yy
 // @contributor		
 // @description		抢你妹神器
-// @match			http://p.www.xiaomi.com/open/index.html*
-// @match			http://www.xiaomi.com/index.php
+// @match			http://p.www.xiaomi.com/open/index.html* 
 // @require			
 // @icon			
 // @run-at			document-idle
-// @version 		3.0
-// @updateURL		http://gmstyy.github.io/qnm/xiaomi3.user.js
+// @version 		4.1
+// @updateURL		http://gmstyy.github.io/qnm/xiaomi4.user.js
 // @supportURL		http://gmstyy.github.io/qnm/	 
 // @homepage		 
 // @contributionURL	 
@@ -45,15 +44,15 @@ var config={
 	acButton:"",
 	seq:{0: {	
 			mode:1,
-			clickX:231,
-			clickY:486,
+			clickX:235,
+			clickY:422,
 			stop:false,
 			frequent:2000,
 			time:5
 		},
 		1: {	
 			mode:2,
-			text:"立即购买",
+			text:"手机",
 			stop:false,
 			frequent:2000,
 			time:5
@@ -69,8 +68,8 @@ function init(){
 	var pi=$(piText);
 	var bc=$(acButton);
 	var ps=$(psButton);
-	var addBtn=$(addButton);
-	var removeBtn=$(remButton);
+	//var addBtn=$(addButton);
+	//var removeBtn=$(remButton);
 	var cti=$(frequentText);
 	var psi=$(stopText);
 	var row=$(divTamplate);
@@ -78,8 +77,14 @@ function init(){
 	pi.val(config.seq[0].clickX+","+config.seq[0].clickY);
 	pi.change(function(){
 		var pos=$(this).val().split(",");
-		config.seq[0].clickX=pos[0];
-		config.seq[0].clickY=pos[1];
+		if(pos.length>1){
+			config.seq[0].clickX=pos[0];
+			config.seq[0].clickY=pos[1];
+			config.seq[0].mode=1;
+		}else{
+			config.seq[0].text=$(this).val();
+			config.seq[0].mode=2;
+		}
 	});
 	cti.change(function(){
 		config.seq[0].frequent=$(this).val();
@@ -110,13 +115,25 @@ function init(){
 		stop();
 	});
 	var container=$("<table/>");
-	addBtn.click(function(){
+	/*addBtn.click(function(){
 		var newDiv=newRow(++config.maxIndex);
 		container.append(newDiv);
-	});
+	});*/
+	var td1=$("<div style='z-index:10000;position: absolute;width:125px;margin-left: 2.5%;'/>").append(bc).append(ps);
+	var td2=$("<td/>").append("坐标:").append(pi).append("间隔:").append(cti).append("毫秒");
+	td2.append(pb).append("运行:").append(psi).append("分");//.append(addBtn);
+	row.append(td2);
+	container.append(row);
+	var newDiv=newRow(++config.maxIndex);
+	container.append(newDiv);
+	var outDiv=$("<div style='z-index:10000;position: absolute;margin-left: 18%;color:white;'/>");
+	outDiv.append(container);
+	body.prepend(outDiv);
+	body.prepend(td1);
+/*	
 	var td1=$("<td/>").append(bc).append(ps);
 	row.append(td1);
-	var td2=$("<td al/>").append("坐标:").append(pi).append("间隔:").append(cti).append("毫秒");
+	var td2=$("<td style='width:200px;'/>").append("坐标:").append(pi).append("间隔:").append(cti).append("毫秒");
 	td2.append(pb).append("运行:").append(psi).append("分").append(addBtn);
 	row.append(td2);
 	container.append(row);
@@ -124,14 +141,17 @@ function init(){
 	container.append(newDiv);
 	var outDiv=$("<div style='z-index:10000;position: absolute;'/>");
 	outDiv.append(container);
+	body.prepend(td1);
 	body.prepend(outDiv);
+	*/
+	
 	
 }
 function newRow(no){
 	var pi=$(piText);
 	//var bc=$(acButton);
 	//var ps=$(psButton);
-	var removeBtn=$(remButton);
+	//var removeBtn=$(remButton);
 	var cti=$(frequentText);
 	var psi=$(stopText);
 	var div=$(divTamplate);
@@ -155,10 +175,10 @@ function newRow(no){
 	psi.change(function(){
 		config.seq[no].time=$(this).val();
 	});
-	removeBtn.click(function(){
+	/*removeBtn.click(function(){
 		delete config.seq[no];
 		$(this.parentNode).remove();
-	});
+	});*/
 	//config.seq[no].acButton=bc;
 	//bc.click(beginClick);
 	/*ps.click(function(){
@@ -169,8 +189,8 @@ function newRow(no){
 		bc.css("color", "#C50000");
 	});*/
 	var td2=$("<td/>").append("按钮:").append(pi).append("间隔:").append(cti).append("毫秒");
-	td2.append("运行:").append(psi).append("分").append(removeBtn);
-	div.append("<td/>").append(td2);
+	td2.append("运行:").append(psi).append("分");//.append(removeBtn);
+	div.append(td2);
 	return div;
 }
 function matchPosition(obj,x,y){
@@ -234,7 +254,7 @@ function changPage(no){
 		return;
 	}
 	cp=config.seq[no];
-	config.stop=false;
+	//config.stop=false;
 	cp.clicked=0;
 	cp.endTime=((new Date()).getTime())+cp.time*60000;
 }
@@ -326,7 +346,8 @@ function mode2(){
 		var oRect   =   this.getBoundingClientRect(); 
 		var ch = document.documentElement.clientHeight;
 		debugger;
-		if($(this).html().toString().indexOf(cp.text)>=0){
+		var li=$(this).parents("li");
+		if($(this).html().toString().indexOf(cp.text)>=0||(li.length>0&&li.html().toString().indexOf(cp.text)>=0)){
 			debugger;
 			if(oRect.top<=0||oRect.top>ch||oRect.left<=0||oRect.width<=0||oRect.height<=0||$(this).is(":hidden")){
 				if(cp.clicked==1){
@@ -356,9 +377,9 @@ function mode2(){
 				}
 			});
 			if(btZ>maxZ){
-				this.click();
 				cp.clicked=1;
 				status=1;
+				this.click();
 				return false;
 			}
 		}
