@@ -1,17 +1,18 @@
 // ==UserScript==
-// @name 			抢你妹-小米
-// @namespace		xiaomi@yy.com
+// @name 			抢你妹-淘宝
+// @namespace		taobao@yy.com
 // @author			yy
 // @developer		yy
 // @contributor		
 // @description		抢你妹神器
-// @match			http://p.www.xiaomi.com/open/index.html* 
+// @match		http://detail.tmall.com/*
+// @match		http://miao.item.taobao.com/*
 // @require			
 // @icon			
 // @run-at			document-idle
-// @version 		4.1
-// @updateURL		http://gmstyy.github.io/qnm/xiaomi4.user.js
-// @supportURL		http://gmstyy.github.io/qnm/	 
+// @version 		1.0 
+// @updateURL		
+// @supportURL		 
 // @homepage		 
 // @contributionURL	 
 // @contributionAmount	￥5.00
@@ -68,8 +69,8 @@ function init(){
 	var pi=$(piText);
 	var bc=$(acButton);
 	var ps=$(psButton);
-	//var addBtn=$(addButton);
-	//var removeBtn=$(remButton);
+	var addBtn=$(addButton);
+	var removeBtn=$(remButton);
 	var cti=$(frequentText);
 	var psi=$(stopText);
 	var row=$(divTamplate);
@@ -77,14 +78,8 @@ function init(){
 	pi.val(config.seq[0].clickX+","+config.seq[0].clickY);
 	pi.change(function(){
 		var pos=$(this).val().split(",");
-		if(pos.length>1){
-			config.seq[0].clickX=pos[0];
-			config.seq[0].clickY=pos[1];
-			config.seq[0].mode=1;
-		}else{
-			config.seq[0].text=$(this).val();
-			config.seq[0].mode=2;
-		}
+		config.seq[0].clickX=pos[0];
+		config.seq[0].clickY=pos[1];
 	});
 	cti.change(function(){
 		config.seq[0].frequent=$(this).val();
@@ -115,18 +110,18 @@ function init(){
 		stop();
 	});
 	var container=$("<table/>");
-	/*addBtn.click(function(){
+	addBtn.click(function(){
 		var newDiv=newRow(++config.maxIndex);
 		container.append(newDiv);
-	});*/
-	var td1=$("<div style='z-index:10000;position: absolute;width:125px;margin-left: 2.5%;'/>").append(bc).append(ps);
+	});
+	var td1=$("<div style='z-index:10000;position: absolute;width:125px;margin-left: 3%;'/>").append(bc).append(ps);
 	var td2=$("<td/>").append("坐标:").append(pi).append("间隔:").append(cti).append("毫秒");
-	td2.append(pb).append("运行:").append(psi).append("分");//.append(addBtn);
+	td2.append(pb).append("运行:").append(psi).append("分").append(addBtn);
 	row.append(td2);
 	container.append(row);
 	var newDiv=newRow(++config.maxIndex);
 	container.append(newDiv);
-	var outDiv=$("<div style='z-index:10000;position: absolute;margin-left: 18%;color:white;'/>");
+	var outDiv=$("<div style='z-index:10000;position: absolute;margin-left: 20%;'/>");
 	outDiv.append(container);
 	body.prepend(outDiv);
 	body.prepend(td1);
@@ -151,7 +146,7 @@ function newRow(no){
 	var pi=$(piText);
 	//var bc=$(acButton);
 	//var ps=$(psButton);
-	//var removeBtn=$(remButton);
+	var removeBtn=$(remButton);
 	var cti=$(frequentText);
 	var psi=$(stopText);
 	var div=$(divTamplate);
@@ -175,10 +170,10 @@ function newRow(no){
 	psi.change(function(){
 		config.seq[no].time=$(this).val();
 	});
-	/*removeBtn.click(function(){
+	removeBtn.click(function(){
 		delete config.seq[no];
 		$(this.parentNode).remove();
-	});*/
+	});
 	//config.seq[no].acButton=bc;
 	//bc.click(beginClick);
 	/*ps.click(function(){
@@ -189,7 +184,7 @@ function newRow(no){
 		bc.css("color", "#C50000");
 	});*/
 	var td2=$("<td/>").append("按钮:").append(pi).append("间隔:").append(cti).append("毫秒");
-	td2.append("运行:").append(psi).append("分");//.append(removeBtn);
+	td2.append("运行:").append(psi).append("分").append(removeBtn);
 	div.append(td2);
 	return div;
 }
@@ -316,12 +311,6 @@ function mode1(){
 			//alert(oRect.left+" "+oRect.right);
 			//alert(this.class);
 			//alert(this.href);
-			config.acButton.focus();
-			$(config.acButton).blur(function(){
-				debugger;
-				changPage(++config.index);
-				$(config.acButton).unbind("blur");
-			});
 			this.click();
 			status=1;
 			cp.clicked=1;
@@ -385,8 +374,13 @@ function mode2(){
 			if(btZ>maxZ){
 				cp.clicked=1;
 				status=1;
+				this.focus();
+				var btnTmp=this;
+				$(btnTmp).blur(function(){
+					changPage(++config.index);
+					$(btnTmp).unbind("blur");
+				});
 				this.click();
-				changPage(++config.index);
 				return false;
 			}
 		}
@@ -414,3 +408,4 @@ function autoclick(){
 			}
 		},cp.frequent);
 }
+
