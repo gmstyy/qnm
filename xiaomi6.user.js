@@ -44,6 +44,7 @@ var config={
 	url:"",
 	stop:false,
 	acButton:"",
+	textInput:0,
 	seq:{0: {	
 			mode:3,
 			text:"点赞砸金蛋",
@@ -106,12 +107,13 @@ function init(){
 	var psi=$(stopText);
 	var row=$(divTamplate);
 	cti.val(config.seq[0].frequent);
-	pi.val(config.seq[0].clickX+","+config.seq[0].clickY);
-	pi.change(function(){
+	pi.val("0");
+	config.textInput=pi;
+	/*pi.change(function(){
 		var pos=$(this).val().split(",");
 		config.seq[0].clickX=pos[0];
 		config.seq[0].clickY=pos[1];
-	});
+	});*/
 	cti.change(function(){
 		config.seq[0].frequent=$(this).val();
 	});
@@ -147,7 +149,7 @@ function init(){
 	});*/
 	var td1=$("<div style='z-index:100000;position: absolute;width:125px;margin-left: 3%;'/>").append(bc).append(ps);
 	var td2=$("<td/>").append("坐标:").append(pi).append("间隔:").append(cti).append("毫秒");
-	td2.append(pb).append("运行:").append(psi).append("分");//.append(addBtn);
+	td2.append("运行:").append(psi).append("分");//.append(addBtn);
 	row.append(td2);
 	container.append(row);
 	/*var newDiv=newRow(++config.maxIndex);
@@ -336,6 +338,10 @@ function changPage(no){
 	if(typeof(config.seq[no])=="undefined"){
 		changPage(no+1);
 		return;
+	}
+	if(no==0){
+		var count=parseInt($(config.textInput).val());
+		$(config.textInput).val(++count);
 	}
 	cp=config.seq[no];
 	config.index=no;
