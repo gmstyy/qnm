@@ -269,9 +269,9 @@ function reset(seq){
 }
 function beginClick(){
 	config.stop=false;
-	config.index=0;
-	var text=cp.text||cp.clickX+","+cp.clickY;
-	/*setCo("xmxxxx",text);
+	changPage(0);
+	/*var text=cp.text||cp.clickX+","+cp.clickY;
+	setCo("xmxxxx",text);
 	setCo("xmxxxt",cp.frequent);
 	setCo("xmxxxs","1");*/
 	autoclick();
