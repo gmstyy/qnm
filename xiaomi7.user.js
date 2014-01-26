@@ -26,7 +26,7 @@ var pButton="<input style='background:#FFC503;color:#C50000;height:30px;width:80
 var psButton="<input style='background:#FFC503;color:#C50000;height:30px;width:60px;'  type='button' value='停'/>";
 var addButton="<input style='background:#FFC503;color:#C50000;height:30px;width:30px;'  type='button' value='+'/>";
 var remButton="<input style='background:#FFC503;color:#C50000;height:30px;width:30px;'  type='button' value='-'/>";
-var piText="<input type='text' style='height:20px;width:60px;'/>";
+var piText="<input type='text' style='height:20px;width:150px;'/>";
 var frequentText="<input type='text'  style='height:20px;width:50px;text-align:right;'/>";
 var stopText="<input type='text'  style='height:20px;width:30px;text-align:right;'/>";
 var divTamplate="<tr align='center'/>";
@@ -61,8 +61,8 @@ var config={
 		}
 	},
 	select:{
-		"Util.showBox('phone')":"手机",
-		"Util.showBox('power')":"电源"/*,
+		"Util.showBox('power')":"电源",
+		"Util.showBox('phone')":"手机"/*,
 		"Util.showBox('power')":"电视"*/
 	}
 	
@@ -82,7 +82,7 @@ function init(){
 	var psi=$(stopText);
 	var row=$(divTamplate);
 	cti.val(config.seq[0].frequent);
-	//pi.val(config.seq[0].clickX+","+config.seq[0].clickY);
+	pi.val(config.seq[0].text);
 	pi.change(function(){
 		var pos=$(this).val().split(",");
 		if(pos.length>1){
