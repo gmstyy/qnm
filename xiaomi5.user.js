@@ -1,11 +1,12 @@
 // ==UserScript==
-// @name 			抢你妹-小米
+// @name 			抢你妹-小米年货
 // @namespace		xiaomi-nh@yy.com
 // @author			yy
 // @developer		yy
 // @contributor		
 // @description		抢你妹神器
 // @match			http://huodong.xiaomi.com/nianhuo2014/* 
+// @match			http://p.www.xiaomi.com/open/index.html* 
 // @match			http://order.xiaomi.com/cart* 
 // @match			http://order.xiaomi.com/buy/checkout*
 // @match			http://order.xiaomi.com/cart/add/2135000541

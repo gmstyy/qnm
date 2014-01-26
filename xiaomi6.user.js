@@ -1,6 +1,6 @@
 // ==UserScript==
-// @name 			抢你妹-小米
-// @namespace		xiaomi-nh@yy.com
+// @name 			抢你妹-小米砸蛋
+// @namespace		xiaomi-zd@yy.com
 // @author			yy
 // @developer		yy
 // @contributor		
