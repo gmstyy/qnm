@@ -148,7 +148,7 @@ function init(){
 		container.append(newDiv);
 	});*/
 	var td1=$("<div style='z-index:100000;position: absolute;width:125px;margin-left: 3%;'/>").append(bc).append(ps);
-	var td2=$("<td/>").append("坐标:").append(pi).append("间隔:").append(cti).append("毫秒");
+	var td2=$("<td/>").append("次数:").append(pi).append("间隔:").append(cti).append("毫秒");
 	td2.append("运行:").append(psi).append("分");//.append(addBtn);
 	row.append(td2);
 	container.append(row);
