@@ -54,7 +54,7 @@ var config={
 		},
 		1: {	
 			mode:3,
-			text:"fkNum",
+			text:"#fkNum",
 			stop:false,
 			frequent:100,
 			time:5,
@@ -183,6 +183,7 @@ function reset(seq){
 function beginClick(){
 	config.index=0;
 	changPage(0);
+	config.stop=false;
 	autoclick();
 	$(config.acButton).val("进行中");
 	$(config.acButton).css("background", "#E5E5E5");
@@ -320,7 +321,7 @@ function mode3(){
 	if(element.length>0){
 		element.each(function(){
 			debugger;
-			text+=trim($(this).html());
+			text+=$(this).html().toString().replace(/(^\s*)|(\s*$)/g,"");
 		});
 		$(cp.text).val(text);
 		$("#boxFkBtn")[0].click();
