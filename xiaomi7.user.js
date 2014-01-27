@@ -44,12 +44,12 @@ var config={
 	stop:false,
 	acButton:"",
 	seq:{0: {	
-			mode:2,
-			text:"Util.showBox('power')",
+			mode:4,
+			text:"Util.showBox('power');",
 			stop:false,
 			frequent:2000,
 			time:5,
-			next:2,
+			next:1,
 			type:"a"
 		},
 		1: {	
@@ -326,6 +326,15 @@ function mode3(){
 		$("#boxFkBtn")[0].click();
 		changPage();
 	}
+	autoclick();
+}
+function mode4(){
+	debugger;
+	//document.Util.showBox('power');
+	var btn=$("<a onclick=\""+cp.text+"\" />");
+	//eval(cp.text);
+	btn[0].click();
+	changPage();
 	autoclick();
 }
 function autoclick(){
