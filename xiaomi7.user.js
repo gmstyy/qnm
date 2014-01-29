@@ -44,7 +44,7 @@ var config={
 	stop:false,
 	acButton:"",
 	seq:{0: {	
-			mode:4,
+			mode:2,
 			text:"Util.showBox('power');",
 			stop:false,
 			frequent:2000,
@@ -66,7 +66,7 @@ var config={
 		"Util.showBox('phone')":"手机"/*,
 		"Util.showBox('power')":"电视"*/
 	}
-	
+	,modeSelect:null
 };
 //alert("2");
 init();
@@ -92,7 +92,7 @@ function init(){
 			config.seq[0].mode=1;
 		}else{
 			config.seq[0].text=$(this).val();
-			config.seq[0].mode=2;
+			config.seq[0].mode=4;
 		}
 	});
 	cti.change(function(){
@@ -125,20 +125,26 @@ function init(){
 	ps.click(function(){
 		stop();
 	});
-	var select=$("<select/>");
-	for(var okey in config.select){
-		var op=$("<option value='"+okey+"'>"+config.select[okey]+"</option>");
-		select.append(op);
-	}
-	select.bind("onchange",function(){
-		debugger;
-		config.seq[0].text=$(this).val();
-		config.seq[0].mode=2;
-	});
-	
+	var modeS=$("<select/>");
+	modeS.append($("<option value='mode1'>坐标</option>"));
+	modeS.append($("<option value='mode2'>名字加方法名</option>"));
+	//modeS.append($("<option value='mode3'>模式3</option>"));
+	modeS.append($("<option value='mode4'>直接调用</option>"));
+	config.modeSelect=modeS;
 	var container=$("<table/>");
 	var td1=$("<div style='z-index:10000;position: absolute;width:125px;margin-left: 2.5%;'/>").append(bc).append(ps);
-	var td2=$("<td/>").append("坐标:").append(pi).append(select).append("间隔:").append(cti).append("毫秒");
+	var td2=$("<td/>").append("坐标:").append(pi);
+	for(var okey in config.select){
+		var op=$("<input type='radio' name='op' value=\""+okey+"\"/>");
+		op.click(function(){
+			debugger;
+			config.seq[0].text=$(this).val();
+			config.seq[0].mode=4;
+		});
+		td2.append(op);
+		td2.append(config.select[okey]);
+	}
+	td2.append(modeS).append(" 间隔:").append(cti).append("毫秒");
 	td2.append(pb).append("运行:").append(psi).append("分");//.append(addBtn);
 	row.append(td2);
 	container.append(row);
@@ -348,6 +354,9 @@ function autoclick(){
 				return;
 			}
 			var fun="mode"+cp.mode+"();";
+			if(config.index==0){
+				fun=$(config.modeSelect).val()+"();";
+			}
 			//debugger;
 			eval(fun);
 		},cp.frequent);
