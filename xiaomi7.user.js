@@ -64,7 +64,7 @@ var config={
 	select:{
 		"电源":"Util.showBox('power')",
 		"手机":"Util.showBox('phone')",
-		"电视":"Util.showBox('power')"
+		"电视":"Util.showBox('tv')"
 	}
 	,modeSelect:null
 };
@@ -383,10 +383,21 @@ function mode3(){
 function mode4(){
 	debugger;
 	//document.Util.showBox('power');
-	var btn=$("<a onclick=\""+cp.text+"\" />");
-	//eval(cp.text);
-	btn[0].click();
-	changPage();
+	var element= $(cp.type);
+	if(element.length>0){
+		element.each(function(){
+			var li=$(this).parents();
+			if(li.length>0&&$(li[0]).html().toString().indexOf(cp.text)>=0){
+			
+				var btn=$("<a onclick=\""+cp.text+"\" />");
+				//eval(cp.text);
+				btn[0].click();
+				changPage();
+				return false;
+			}
+		});
+	}
+		
 	autoclick();
 }
 function autoclick(){
