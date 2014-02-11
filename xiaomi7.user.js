@@ -62,9 +62,9 @@ var config={
 		}
 	},
 	select:{
-		"Util.showBox('power')":"电源",
-		"Util.showBox('phone')":"手机",
-		"Util.showBox('power')":"电视"
+		"电源":"Util.showBox('power')",
+		"手机":"Util.showBox('phone')",
+		"电视":"Util.showBox('power')"
 	}
 	,modeSelect:null
 };
@@ -135,14 +135,14 @@ function init(){
 	var td1=$("<div style='z-index:10000;position: absolute;width:125px;margin-left: 2.5%;'/>").append(bc).append(ps);
 	var td2=$("<td/>").append("坐标:").append(pi);
 	for(var okey in config.select){
-		var op=$("<input type='radio' name='op' value=\""+okey+"\"/>");
+		var op=$("<input type='radio' name='op' value=\""+config.select[okey]+"\"/>");
 		op.click(function(){
 			debugger;
 			config.seq[0].text=$(this).val();
 			config.seq[0].mode=4;
 		});
 		td2.append(op);
-		td2.append(config.select[okey]);
+		td2.append(okey);
 	}
 	td2.append(modeS).append(" 间隔:").append(cti).append("毫秒");
 	td2.append(pb).append("运行:").append(psi).append("分");//.append(addBtn);
