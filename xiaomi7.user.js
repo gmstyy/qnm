@@ -127,9 +127,10 @@ function init(){
 	});
 	var modeS=$("<select/>");
 	modeS.append($("<option value='mode1'>坐标</option>"));
-	modeS.append($("<option value='mode2'>名字加Li</option>"));
+	modeS.append($("<option value='mode2'>名字</option>"));
 	//modeS.append($("<option value='mode3'>模式3</option>"));
 	modeS.append($("<option value='mode4'>直接调用</option>"));
+	modeS.val("mode4");
 	config.modeSelect=modeS;
 	var container=$("<table/>");
 	var td1=$("<div style='z-index:10000;position: absolute;width:125px;margin-left: 2.5%;'/>").append(bc).append(ps);
