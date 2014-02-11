@@ -63,8 +63,8 @@ var config={
 	},
 	select:{
 		"Util.showBox('power')":"电源",
-		"Util.showBox('phone')":"手机"/*,
-		"Util.showBox('power')":"电视"*/
+		"Util.showBox('phone')":"手机",
+		"Util.showBox('power')":"电视"
 	}
 	,modeSelect:null
 };
@@ -127,7 +127,7 @@ function init(){
 	});
 	var modeS=$("<select/>");
 	modeS.append($("<option value='mode1'>坐标</option>"));
-	modeS.append($("<option value='mode2'>名字加方法名</option>"));
+	modeS.append($("<option value='mode2'>名字加Li</option>"));
 	//modeS.append($("<option value='mode3'>模式3</option>"));
 	modeS.append($("<option value='mode4'>直接调用</option>"));
 	config.modeSelect=modeS;
@@ -306,20 +306,64 @@ function mode1(){
 	autoclick();
 }
 function mode2(){
-	debugger;
 	var element= $(cp.type);
+	var status=0;
 	element.each(function(){
+		var oRect   =   this.getBoundingClientRect(); 
+		var ch = document.documentElement.clientHeight;
 		debugger;
-		var clickStr=$(this).attr("onclick");
-		if($(this).html().toString().indexOf(cp.text)>=0||(!isNull(clickStr)&&clickStr.indexOf(cp.text)>=0)){
+		var li=$(this).parents("li");
+		if($(this).html().toString().indexOf(cp.text)>=0||$(this).val().indexOf(cp.text)>=0||(li.length>0&&li.html().toString().indexOf(cp.text)>=0)){
 			debugger;
-			this.click();
-			changPage();
-			return false;
+			if(oRect.top<=0||oRect.top>ch||oRect.left<=0||oRect.width<=0||oRect.height<=0||$(this).is(":hidden")){
+				if(cp.clicked==1){
+					debugger;
+					//alert(1);
+					changPage(++config.index);
+				}
+				return;// true;
+			}
+			var upDiv=$("div");
+			var maxZ=0;
+			var topDiv="";
+			var btZ=this.style.zIndex || 1;
+			$(this).parents().each(function(){
+				btZ+=this.style.zIndex || 0;
+			});
+			upDiv.each(function(){
+				if(matchPosition(this,oRect.left,oRect.top)){
+					var zi = this.style.zIndex || 0;
+					//var zi=$(this).css("z-index");
+					if(parseInt(zi)>maxZ){
+						//alert(parseInt(zi));
+						maxZ=parseInt(zi);
+						topDiv=this;
+					}
+					//maxZ=parseInt(zi)>maxZ?parseInt(zi):maxZ;
+				}
+			});
+			if(btZ>maxZ){
+				cp.clicked=1;
+				status=1;
+				this.focus();
+				var btnTmp=this;
+				$(btnTmp).blur(function(){
+					changPage(++config.index);
+					$(btnTmp).unbind("blur");
+				});
+				this.click();
+				return false;
+			}
 		}
 	});
+	if(status==0&&cp.clicked==1){
+		//debugger;
+		//alert(2);
+		changPage(++config.index);
+	}
 	autoclick();
 }
+
 function mode3(){
 	debugger;
 	var element= $(cp.type).find('span');
