@@ -24,6 +24,7 @@
 
 var acButton="<input style='background:#FFC503;color:#C50000;height:30px;width:60px;' type='button' value='开始点'/>";
 var pButton="<input style='background:#FFC503;color:#C50000;height:30px;width:80px;'  type='button' value='取位置'/>";
+var cButton="<input style='background:#FFC503;color:#C50000;height:30px;width:80px;'  type='button' value='取位置'/>";
 var psButton="<input style='background:#FFC503;color:#C50000;height:30px;width:60px;'  type='button' value='停'/>";
 var addButton="<input style='background:#FFC503;color:#C50000;height:30px;width:30px;'  type='button' value='+'/>";
 var remButton="<input style='background:#FFC503;color:#C50000;height:30px;width:30px;'  type='button' value='-'/>";
@@ -44,7 +45,7 @@ var config={
 	stop:false,
 	acButton:"",
 	seq:{0: {	
-			mode:2,
+			mode:4,
 			text:"Util.showBox('power');",
 			stop:false,
 			frequent:2000,
@@ -62,8 +63,8 @@ var config={
 		}
 	},
 	select:{
-		"电源":"Util.showBox('power')",
 		"手机":"Util.showBox('phone')",
+		"电源":"Util.showBox('power')",
 		"电视":"Util.showBox('tv')"
 	}
 	,modeSelect:null
@@ -83,16 +84,16 @@ function init(){
 	var psi=$(stopText);
 	var row=$(divTamplate);
 	cti.val(config.seq[0].frequent);
-	pi.val(config.seq[0].text);
+	
 	pi.change(function(){
 		var pos=$(this).val().split(",");
 		if(pos.length>1){
 			config.seq[0].clickX=pos[0];
 			config.seq[0].clickY=pos[1];
-			config.seq[0].mode=1;
+			//config.seq[0].mode=1;
 		}else{
 			config.seq[0].text=$(this).val();
-			config.seq[0].mode=4;
+			//config.seq[0].mode=4;
 		}
 	});
 	cti.change(function(){
@@ -125,16 +126,18 @@ function init(){
 	ps.click(function(){
 		stop();
 	});
-	var modeS=$("<select/>");
+	var modeS=$("<select />");
 	modeS.append($("<option value='mode1'>坐标</option>"));
 	modeS.append($("<option value='mode2'>名字</option>"));
 	//modeS.append($("<option value='mode3'>模式3</option>"));
 	modeS.append($("<option value='mode4'>直接调用</option>"));
-	modeS.val("mode4");
+	
+	
 	config.modeSelect=modeS;
 	var container=$("<table/>");
 	var td1=$("<div style='z-index:10000;position: absolute;width:125px;margin-left: 2.5%;'/>").append(bc).append(ps);
-	var td2=$("<td/>").append("坐标:").append(pi);
+	var td2=$("<td/>").append(modeS).append(pi);
+	var span1=$("<span/>");
 	for(var okey in config.select){
 		var op=$("<input type='radio' name='op' value=\""+config.select[okey]+"\"/>");
 		op.click(function(){
@@ -142,11 +145,34 @@ function init(){
 			config.seq[0].text=$(this).val();
 			config.seq[0].mode=4;
 		});
-		td2.append(op);
-		td2.append(okey);
+		span1.append(op);
+		span1.append(okey);
 	}
-	td2.append(modeS).append(" 间隔:").append(cti).append("毫秒");
-	td2.append(pb).append("运行:").append(psi).append("分");//.append(addBtn);
+	td2.append(span1);
+	modeS.change(function(){
+	 // alert($(this).val());
+	  if($(this).val()=="mode1"){
+		span1.hide();
+		pi.show();
+		pb.show();
+	  }else if($(this).val()=="mode2"){
+		span1.hide();
+		pb.hide();
+		pi.show();
+		}else if($(this).val()=="mode4"){
+		debugger;
+		span1.find("input:radio[checked='checked']").click();
+		span1.show();
+		pi.hide();
+		pb.hide();
+	  }
+	});
+	modeS.val("mode4");
+	span1.find("input:radio")[0].click();
+	pi.hide();
+	pb.hide();
+	td2.append(" 间隔:").append(cti).append("毫秒");
+	td2.append(pb).append(" 运行:").append(psi).append("分");//.append(addBtn);
 	row.append(td2);
 	container.append(row);
 	for(var index in config.seq){
@@ -157,6 +183,13 @@ function init(){
 	outDiv.append(container);
 	body.prepend(outDiv);
 	body.prepend(td1);
+	pi.val(config.seq[0].text);
+	/*bc.mouseover(function(){
+		$(this).css("top","200px");
+	});
+	bc.mouseout(function(){
+		$(this).css("top","376px");
+	});*/
 }
 
 function matchPosition(obj,x,y){
