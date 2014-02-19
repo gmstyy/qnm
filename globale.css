@@ -1,0 +1,49 @@
+﻿body {
+font: 12px/1.6 "微软雅黑", "宋体",Arial, Helvetica, sans-serif;
+}
+.bg-b {
+background-image: url(images/bg-repeat-x-b.png);
+}
+.bg-b {
+background: #fff url(images/bg-repeat-x.png) repeat-x;
+}
+.p-white {
+	color: #FFFFFF;
+}
+.down {
+	padding-left:70px;
+	padding-top:13px;
+	padding-bottom:13px;
+	padding-right:50px;
+	position:relative;
+	line-height: 80px;
+	margin-top: 7px;
+	font-size: 36px;
+	color: #e5490c;
+	background: url(images/downbut.png) no-repeat left top;
+	text-decoration: none;
+	font-weight: bold;
+}
+.url{
+	position:relative;
+	width: 84px;
+	height: 26px;
+	line-height: 26px;
+	padding-bottom: 2px;
+	background: url(images/lab-btn1.png) no-repeat;
+	color: #364049;
+	font-size: 14px;
+	display: inline-block;
+	text-align: center;
+	text-decoration: none;
+	margin:10px;
+}
+.content {
+	background-color:#ffffff;
+	margin:1px;
+}
+.foot{
+	position:fixed;
+	top:95%;
+	width:100%;
+}
