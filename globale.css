@@ -47,3 +47,7 @@ background: #fff url(images/bg-repeat-x.png) repeat-x;
 	top:95%;
 	width:100%;
 }
+.mail{
+	color: #e5490c;
+	text-decoration: none;
+}
