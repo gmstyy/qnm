@@ -7,6 +7,7 @@
 // @description		抢你妹神器
 // @match			http://p.www.xiaomi.com/open/index.html* 
 // @match			http://www.xiaomi.com/c/chunjie/* 
+// @match			http://p.www.xiaomi.com/m/op/page/*
 // @require			
 // @icon			
 // @run-at			document-idle
@@ -400,22 +401,18 @@ function mode2(){
 
 function mode3(){
 	debugger;
-	var element= $(cp.type).children();
-	//var text="";
+	var element= $(cp.type).find('em');
+	var text="";
 	if(element.length>0){
-		var btn=$("<a onclick=\"(document.getElementById('fkNum').value=CONFIG.fkNum)\" />");
-		btn[0].click();
-		changPage();
-	}
-	/*if(element.length>0){
 		element.each(function(){
 			debugger;
+			if($(this).is(":hidden")){return true;}
 			text+=$(this).html().toString().replace(/(^\s*)|(\s*$)/g,"");
 		});
 		$(cp.text).val(text);
 		$("#boxFkBtn")[0].click();
 		changPage();
-	}*/
+	}
 	autoclick();
 }
 function mode4(){
