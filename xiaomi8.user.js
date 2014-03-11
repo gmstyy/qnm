@@ -402,16 +402,22 @@ function mode3(){
 	debugger;
 	var element= $(cp.type).find('em');
 	var text="";
+	
+	
 	if(element.length>0){
+		var btn=$("<a onclick=\"(document.getElementById('#fkNum').value=CONFIG.fkNum)\" />");
+		btn[0].click();
+		changPage();
+	}
+	/*if(element.length>0){
 		element.each(function(){
 			debugger;
-			if($(this).is(":hidden")){return true;}
 			text+=$(this).html().toString().replace(/(^\s*)|(\s*$)/g,"");
 		});
 		$(cp.text).val(text);
 		$("#boxFkBtn")[0].click();
 		changPage();
-	}
+	}*/
 	autoclick();
 }
 function mode4(){
