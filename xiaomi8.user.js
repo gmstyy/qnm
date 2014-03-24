@@ -6,11 +6,10 @@
 // @contributor		
 // @description		抢你妹神器
 // @match			http://p.www.xiaomi.com/open/index.html* 
-// @match			http://www.xiaomi.com/c/chunjie/* 
 // @require			
 // @icon			
 // @run-at			document-idle
-// @version 		5.0
+// @version 		5.1
 // @updateURL		http://gmstyy.github.io/qnm/xiaomi7.user.js
 // @supportURL		http://gmstyy.github.io/qnm/	 
 // @homepage		 

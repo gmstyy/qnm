@@ -1,18 +1,16 @@
 // ==UserScript==
 // @name 			抢你妹-小米
-// @namespace		xiaomi@yy.com
+// @namespace		xiaomi-m@yy.com
 // @author			yy
 // @developer		yy
 // @contributor		
 // @description		抢你妹神器
-// @match			http://p.www.xiaomi.com/open/index.html* 
-// @match			http://www.xiaomi.com/c/chunjie/* 
-// @match			http://p.www.xiaomi.com/m/op/page/*
+// @match			http://p.www.xiaomi.com/m/*
 // @require			
 // @icon			
 // @run-at			document-idle
-// @version 		5.0
-// @updateURL		http://gmstyy.github.io/qnm/xiaomi7.user.js
+// @version 		1.0
+// @updateURL		http://gmstyy.github.io/qnm/xiaomi9.user.js
 // @supportURL		http://gmstyy.github.io/qnm/	 
 // @homepage		 
 // @contributionURL	 
@@ -47,7 +45,7 @@ var config={
 	acButton:"",
 	seq:{0: {	
 			mode:4,
-			text:"Util.showBox('power');",
+			text:"miphone",
 			stop:false,
 			frequent:2000,
 			time:5,
@@ -56,7 +54,7 @@ var config={
 		},
 		1: {	
 			mode:3,
-			text:"#fkNum",
+			text:"vInput",
 			stop:false,
 			frequent:100,
 			time:5,
@@ -64,9 +62,9 @@ var config={
 		}
 	},
 	select:{
-		"手机":"Util.showBox('phone')",
-		"电源":"Util.showBox('power')",
-		"电视":"Util.showBox('tv')"
+		"手机":"miphone",
+		"电源":"mipower",
+		"电视":"mitv"
 	}
 	,modeSelect:null
 };
@@ -401,16 +399,14 @@ function mode2(){
 
 function mode3(){
 	debugger;
-	var element= $(cp.type).find('em');
-	var text="";
-	if(element.length>0){
-		element.each(function(){
-			debugger;
-			if($(this).is(":hidden")){return true;}
-			text+=$(this).html().toString().replace(/(^\s*)|(\s*$)/g,"");
-		});
-		$(cp.text).val(text);
-		$("#boxFkBtn")[0].click();
+	//var element= $(cp.type).children();
+	//var text="";
+	//if(element.length>0){
+	var btn=$("<a onclick=\"(document.getElementById('"+cp.text+"').value=g.fk.num)\" />");
+	btn[0].click();
+	var text= $("#"+cp.text).val();
+	if(!text){
+		$("#vBtn")[0].click();
 		changPage();
 	}
 	autoclick();
@@ -418,19 +414,11 @@ function mode3(){
 function mode4(){
 	debugger;
 	//document.Util.showBox('power');
-	var element= $(cp.type);
-	if(element.length>0){
-		element.each(function(){
-			var li=$(this).parents();
-			if(li.length>0&&$(li[0]).html().toString().indexOf(cp.text)>=0){
-			
-				var btn=$("<a onclick=\""+cp.text+"\" />");
-				//eval(cp.text);
-				btn[0].click();
-				changPage();
-				return false;
-			}
-		});
+	var element= $("#"+cp.text);
+	if(element.length>0&&element.html().toString().indexOf("购买")>=0){
+		element[0].click();
+		changPage();
+		
 	}
 		
 	autoclick();
