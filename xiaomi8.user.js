@@ -400,13 +400,18 @@ function mode2(){
 
 function mode3(){
 	debugger;
-	var element= $(cp.type).children();
+	//var element= $(cp.type).children();
 	//var text="";
-	if(element.length>0){
-		var btn=$("<a onclick=\"(document.getElementById('fkNum').value=CONFIG.fkNum)\" />");
-		btn[0].click();
+	//if(element.length>0){
+	var btn=$("<a onclick=\"(document.getElementById('fkNum').value=CONFIG.fkNum)\" />");
+	btn[0].click();
+	var text= $(cp.text).val();
+	if(!text){
+		$("#boxFkBtn")[0].click();
 		changPage();
 	}
+		
+	//}
 	/*if(element.length>0){
 		element.each(function(){
 			debugger;
