@@ -405,7 +405,7 @@ function mode3(){
 	var btn=$("<a onclick=\"(document.getElementById('"+cp.text+"').value=g.fk.num)\" />");
 	btn[0].click();
 	var text= $("#"+cp.text).val();
-	if(!text){
+	if(text){
 		$("#vBtn")[0].click();
 		changPage();
 	}
