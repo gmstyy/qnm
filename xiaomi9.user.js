@@ -402,7 +402,7 @@ function mode3(){
 	//var element= $(cp.type).children();
 	//var text="";
 	//if(element.length>0){
-	var btn=$("<a onclick=\"(document.getElementById('"+cp.text+"').value=g.fk.num)\" />");
+	var btn=$("<a onclick=\"(g.fk.vInput[0].value=g.fk.num.join( \"\"))\" />");
 	btn[0].click();
 	var text= $("#"+cp.text).val();
 	if(text){
